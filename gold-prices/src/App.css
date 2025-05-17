@@ -1,0 +1,22 @@
+/* App.css */
+
+
+@font-face {
+  font-family: 'Cal Sans';
+  src: url('../public/fonts/CalSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Tajawal';
+  src: url('../public/fonts/Tajawal-Bold.ttf') format('truetype');
+}
+
+/* English font */
+body.en {
+  font-family: 'Cal Sans', sans-serif;
+}
+
+/* Arabic font */
+body.ar {
+  font-family: 'Tajawal', sans-serif;
+}
