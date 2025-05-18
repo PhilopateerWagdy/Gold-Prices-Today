@@ -13,6 +13,8 @@ router.get("/", async (req, res) => {
   try {
     let companies = await Company.find();
 
+    console.log("companies : " + companies);
+
     res.status(200).json(companies);
   } catch (err) {
     for (let e in err.errors) {

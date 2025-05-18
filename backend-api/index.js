@@ -46,6 +46,8 @@ mongoose
     res.status(500).json({ error: "Database connection failed" });
   });
 
+console.log("Using DB:", mongoose.connection.name);
+
 // ------------------------------------------------------
 // CRUD operations on local object (on another module -> MVC pattern)
 
