@@ -64,63 +64,63 @@ app.use("/api/", apisRouter);
 
 // ------------------------------------------------------
 // update function that updates today's data record every min automatically
-cron.schedule("* * * * *", () => {
-  console.log("⏰ Cron triggered at: " + moment().format("HH:mm"));
+// cron.schedule("* * * * *", () => {
+//   console.log("⏰ Cron triggered at: " + moment().format("HH:mm"));
 
-  // Fake req and res
-  const req = {
-    body: {},
-    params: {},
-    query: {},
-  };
+//   // Fake req and res
+//   const req = {
+//     body: {},
+//     params: {},
+//     query: {},
+//   };
 
-  const res = {
-    send: (data) => console.log(data),
-    status: (code) => ({ send: (msg) => console.error(`Error ${code}:`, msg) }),
-  };
+//   const res = {
+//     send: (data) => console.log(data),
+//     status: (code) => ({ send: (msg) => console.error(`Error ${code}:`, msg) }),
+//   };
 
-  // Manually chain the middlewares using next()
-  const next1 = async (err) => {
-    if (err) return console.error("Error in updateGoldPrices:", err);
+//   // Manually chain the middlewares using next()
+//   const next1 = async (err) => {
+//     if (err) return console.error("Error in updateGoldPrices:", err);
 
-    const next2 = async (err2) => {
-      if (err2) return console.error("Error in setCurrenciesData:", err2);
+//     const next2 = async (err2) => {
+//       if (err2) return console.error("Error in setCurrenciesData:", err2);
 
-      // Now that the first two middlewares have finished, call the next handler
-      try {
-        await priceController.updateDbRecord(req, res); // Fire the updateDbRecord handler
-      } catch (err3) {
-        console.error("Error in updateDbRecord:", err3);
-      }
+//       // Now that the first two middlewares have finished, call the next handler
+//       try {
+//         await priceController.updateDbRecord(req, res); // Fire the updateDbRecord handler
+//       } catch (err3) {
+//         console.error("Error in updateDbRecord:", err3);
+//       }
 
-      // Call updateCoinsData after updateDbRecord
-      try {
-        await ignotsController.updateIgnotsData(req, res); // Fire the new updateCoinsData handler
-      } catch (err4) {
-        console.error("Error in updateIgnotsData:", err4);
-      }
+//       // Call updateCoinsData after updateDbRecord
+//       try {
+//         await ignotsController.updateIgnotsData(req, res); // Fire the new updateCoinsData handler
+//       } catch (err4) {
+//         console.error("Error in updateIgnotsData:", err4);
+//       }
 
-      // Call updateCoinsData after updateDbRecord
-      try {
-        await coinsController.updateCoinsData(req, res); // Fire the new updateCoinsData handler
-      } catch (err4) {
-        console.error("Error in updateCoinsData:", err4);
-      }
-    };
+//       // Call updateCoinsData after updateDbRecord
+//       try {
+//         await coinsController.updateCoinsData(req, res); // Fire the new updateCoinsData handler
+//       } catch (err4) {
+//         console.error("Error in updateCoinsData:", err4);
+//       }
+//     };
 
-    try {
-      await priceController.setCurrenciesData(req, res, next2); // Fire setCurrenciesData middleware
-    } catch (err2) {
-      next2(err2); // If error happens, call the next2 function with the error
-    }
-  };
+//     try {
+//       await priceController.setCurrenciesData(req, res, next2); // Fire setCurrenciesData middleware
+//     } catch (err2) {
+//       next2(err2); // If error happens, call the next2 function with the error
+//     }
+//   };
 
-  try {
-    priceController.updateGoldPrices(req, res, next1); // Fire the first middleware (updateGoldPrices)
-  } catch (err) {
-    next1(err); // If error happens, call the next1 function with the error
-  }
-});
+//   try {
+//     priceController.updateGoldPrices(req, res, next1); // Fire the first middleware (updateGoldPrices)
+//   } catch (err) {
+//     next1(err); // If error happens, call the next1 function with the error
+//   }
+// });
 
 // ------------------------------------------------------
 // listen to users requests
