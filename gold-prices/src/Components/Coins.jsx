@@ -55,7 +55,7 @@ const Coins = (props) => {
           setCoins(data);
         }
         // need size available in that selected company
-        else if (selectedCompany.ignot_size.includes(selectedSize)) {
+        else if (selectedCompany.coin.includes(selectedSize)) {
           const { data } = await axios.get(
             `${process.env.REACT_APP_API_URL}/api/coins/${selectedCompany.name}/${selectedSize}`
           );
