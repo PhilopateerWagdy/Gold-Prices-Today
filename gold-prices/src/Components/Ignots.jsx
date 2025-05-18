@@ -16,7 +16,7 @@ const Ignots = (props) => {
   const [selectedCompany, setSelectedCompany] = useState(null); // Set initial as null or undefined
 
   const [sizes, setSizes] = useState([]);
-  const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedSize, setSelectedSize] = useState(111); // 111 -> all sizes
 
   const [ingots, setIngots] = useState([]);
 
@@ -49,42 +49,40 @@ const Ignots = (props) => {
   }, []);
 
   useEffect(() => {
-    const getNeededIngot = async () => {
+    const getNeededIngotSize = async () => {
       try {
-        const { data } = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/ignots/${selectedCompany.name}`
-        );
-
-        setIngots(data);
-      } catch (err) {
-        console.log("Error: " + err);
-      }
-    };
-
-    if (selectedCompany) {
-      // get all ingots data for that company
-      getNeededIngot();
-      // Update sizes whenever selectedCompany changes (use this for additional logic)
-      setSizes(selectedCompany.ignot_size);
-    }
-  }, [selectedCompany]);
-
-  useEffect(() => {
-    const getNeededIngot = async () => {
-      try {
-        const { data } = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/ignots/${selectedCompany.name}/${selectedSize}`
-        );
-
-        setIngots(data);
+        // need all sizes
+        if (selectedSize === 111) {
+          const { data } = await axios.get(
+            `${process.env.REACT_APP_API_URL}/api/ignots/${selectedCompany.name}`
+          );
+          setIngots(data);
+        }
+        // need size available in that selected company
+        else if (selectedCompany.ignot_size.includes(selectedSize)) {
+          const { data } = await axios.get(
+            `${process.env.REACT_APP_API_URL}/api/ignots/${selectedCompany.name}/${selectedSize}`
+          );
+          setIngots(data);
+        }
+        // need specific size
+        else {
+          setIngots([
+            {
+              size: 0,
+              factory: 0,
+              cashback: 0,
+              pur: 0,
+              sel: 0,
+            },
+          ]);
+        }
       } catch (err) {
         //console.log("Error: " + err);
       }
     };
 
-    if (selectedSize) {
-      getNeededIngot();
-    }
+    getNeededIngotSize();
   }, [selectedCompany, selectedSize]);
 
   return (
@@ -135,7 +133,7 @@ const Ignots = (props) => {
             </select>
             <select
               id="size-select"
-              value={selectedSize || ""}
+              value={selectedSize === 111 ? t("all_sizes") : ""}
               onChange={(e) => handleSizeChange(Number(e.target.value))}
               style={{
                 padding: "0.5rem 1rem",
@@ -153,6 +151,9 @@ const Ignots = (props) => {
             >
               <option value="" disabled hidden>
                 Select a Size
+              </option>
+              <option key={111} value={111}>
+                {t("all-sizes")}
               </option>
               {sizes.map((size, index) => (
                 <option key={index} value={size}>
@@ -214,19 +215,25 @@ const Ignots = (props) => {
                 {ingots.map((ingot) => (
                   <tr key={ingot.size}>
                     <th style={{ fontWeight: "normal" }}>
-                      <span>{`${ingot.size}`}</span>
+                      <span>
+                        {ingot.size === 0 ? t("not_found") : ingot.size}
+                      </span>
                     </th>
                     <th style={{ fontWeight: "normal" }}>
-                      <span>{ingot.factory}</span>
+                      <span>{ingot.size === 0 ? 0 : ingot.factory}</span>
                     </th>
                     <th style={{ fontWeight: "normal" }}>
-                      <span>{ingot.cashback}</span>
+                      <span>{ingot.size === 0 ? 0 : ingot.cashback}</span>
                     </th>
                     <th style={{ fontWeight: "normal" }}>
-                      <span>{roundTo2Decimals(ingot.sel)}</span>
+                      <span>
+                        {ingot.size === 0 ? 0 : roundTo2Decimals(ingot.sel)}
+                      </span>
                     </th>
                     <th style={{ fontWeight: "normal" }}>
-                      <span>{roundTo2Decimals(ingot.pur)}</span>
+                      <span>
+                        {ingot.size === 0 ? 0 : roundTo2Decimals(ingot.pur)}
+                      </span>
                     </th>
                   </tr>
                 ))}

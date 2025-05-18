@@ -37,6 +37,9 @@
   "gm": "gm",
   "i_compare": "You Can Compare Between Companies Gold Ingots Prices",
 
+  "not_found": "Not Exist",
+  "all-sizes": "All Sizes",
+
   "coins": "Coins Prices Now In Egypt",
   "coin_buy_desc": "Coin Buying Price = (21 Gold Karat Buying Price + Workmanship) * Coin Size",
   "coin_sell_desc": "Coin Selling Price = (24 Gold Karat Selling Price + Cashback) * Coin Size",
