@@ -14,6 +14,7 @@ const Home = (props) => {
   const { t } = useTranslation();
   const [selectedCurrency, setSelectedCurrency] = useState(props.countries[0]);
   const [prices, setPrices] = useState({});
+  const isMobile = window.innerWidth <= 768;
 
   const handleChange = (selectedOption) => {
     setSelectedCurrency(selectedOption); // Set the selected option to state
@@ -53,27 +54,45 @@ const Home = (props) => {
 
           <div>
             <h5>{t("currency")}</h5>
-            <Select
-              options={props.countries}
-              value={selectedCurrency} // Set value to the selectedCurrency state
-              onChange={handleChange}
-              defaultValue={props.countries[0]} // Set default value to the first option (EGP)
-              getOptionLabel={(e) => (
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <img
-                    src={e.flagUrl}
-                    alt={e.label}
-                    style={{
-                      width: "20px",
-                      height: "15px",
-                      marginRight: "10px",
-                    }}
-                  />
-                  {`  ${e.label}  `}
-                </div>
-              )}
-              placeholder="Select a Currency"
-            />
+            {isMobile ? (
+              <select
+                value={selectedCurrency.value}
+                onChange={(e) =>
+                  handleChange(
+                    props.countries.find((c) => c.value === e.target.value)
+                  )
+                }
+              >
+                {props.countries.map((country) => (
+                  <option key={country.value} value={country.value}>
+                    {country.label}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <Select
+                options={props.countries}
+                value={selectedCurrency} // Set value to the selectedCurrency state
+                onChange={handleChange}
+                defaultValue={props.countries[0]} // Set default value to the first option (EGP)
+                getOptionLabel={(e) => (
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <img
+                      src={e.flagUrl}
+                      alt={e.label}
+                      style={{
+                        width: "20px",
+                        height: "15px",
+                        marginRight: "10px",
+                      }}
+                    />
+                    {`  ${e.label}  `}
+                  </div>
+                )}
+                placeholder="Select a Currency"
+                isSearchable={false}
+              />
+            )}
           </div>
 
           <hr className="border border-dark w-100"></hr>
