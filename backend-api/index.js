@@ -43,7 +43,7 @@ mongoose
   })
   .catch((err) => {
     console.log("Failed to connect to Database.");
-    res.status(500).json({ error: "Database connection failed" });
+    res.status(501).json({ error: "Database connection failed" });
   });
 
 // ------------------------------------------------------
