@@ -49,7 +49,7 @@ mongoose
 app.use("/api/gold-prices", priceRouter);
 app.use("/api/ignots", ignotsRouter);
 app.use("/api/coins", coinsRouter);
-app.use("/api/companies", companiesRouter);
+app.use("/companies", companiesRouter);
 app.use("/api/messages", messagesRouter);
 app.use("/api/", apisRouter);
 
