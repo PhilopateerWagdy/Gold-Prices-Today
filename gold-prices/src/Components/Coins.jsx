@@ -32,7 +32,7 @@ const Coins = (props) => {
     const getAllCompanies = async () => {
       try {
         const { data } = await axios.get(
-          `${import.meta.env.REACT_APP_API_URL}/api/companies`
+          `${process.env.REACT_APP_API_URL}/api/companies`
         );
         setCompanies(data);
         // Set the selected company if data exists
@@ -52,9 +52,7 @@ const Coins = (props) => {
     const getNeededCoin = async () => {
       try {
         const { data } = await axios.get(
-          `${import.meta.env.REACT_APP_API_URL}/api/coins/${
-            selectedCompany.name
-          }`
+          `${process.env.REACT_APP_API_URL}/api/coins/${selectedCompany.name}`
         );
 
         setCoins(data);
@@ -75,9 +73,7 @@ const Coins = (props) => {
     const getNeededCoin = async () => {
       try {
         const { data } = await axios.get(
-          `${import.meta.env.REACT_APP_API_URL}/api/coins/${
-            selectedCompany.name
-          }/${selectedSize}`
+          `${process.env.REACT_APP_API_URL}/api/coins/${selectedCompany.name}/${selectedSize}`
         );
 
         setCoins(data);

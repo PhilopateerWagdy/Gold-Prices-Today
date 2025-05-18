@@ -23,9 +23,7 @@ const Home = (props) => {
     const getGoldPrices = async () => {
       try {
         const { data } = await axios.get(
-          `${import.meta.env.REACT_APP_API_URL}/api/gold-prices/${
-            selectedCurrency.value
-          }`
+          `${process.env.REACT_APP_API_URL}/api/gold-prices/${selectedCurrency.value}`
         );
         console.log(data);
         setPrices(data);
