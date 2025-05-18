@@ -5,10 +5,6 @@ import axios from "axios";
 
 import HorzAdsense from "./HorzAdsense";
 
-function roundTo2Decimals(num) {
-  return Math.round(num * 100) / 100;
-}
-
 const Coins = (props) => {
   const { t } = useTranslation();
 
@@ -16,7 +12,7 @@ const Coins = (props) => {
   const [selectedCompany, setSelectedCompany] = useState(null); // Set initial as null or undefined
 
   const [sizes, setSizes] = useState([]);
-  const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedSize, setSelectedSize] = useState(111);
 
   const [coins, setCoins] = useState([]);
 
@@ -49,42 +45,40 @@ const Coins = (props) => {
   }, []);
 
   useEffect(() => {
-    const getNeededCoin = async () => {
+    const getNeededCoinSize = async () => {
       try {
-        const { data } = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/coins/${selectedCompany.name}`
-        );
-
-        setCoins(data);
+        // need all sizes
+        if (selectedSize === 111) {
+          const { data } = await axios.get(
+            `${process.env.REACT_APP_API_URL}/api/coins/${selectedCompany.name}`
+          );
+          setCoins(data);
+        }
+        // need size available in that selected company
+        else if (selectedCompany.ignot_size.includes(selectedSize)) {
+          const { data } = await axios.get(
+            `${process.env.REACT_APP_API_URL}/api/coins/${selectedCompany.name}/${selectedSize}`
+          );
+          setCoins(data);
+        }
+        // need specific size
+        else {
+          setCoins([
+            {
+              coin: 0,
+              factory: 0,
+              cashback: 0,
+              pur: 0,
+              sel: 0,
+            },
+          ]);
+        }
       } catch (err) {
         console.log("Error: " + err);
       }
     };
 
-    if (selectedCompany) {
-      // get all ingots data for that company
-      getNeededCoin();
-      // Update sizes whenever selectedCompany changes (use this for additional logic)
-      setSizes(selectedCompany.coin);
-    }
-  }, [selectedCompany]);
-
-  useEffect(() => {
-    const getNeededCoin = async () => {
-      try {
-        const { data } = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/coins/${selectedCompany.name}/${selectedSize}`
-        );
-
-        setCoins(data);
-      } catch (err) {
-        //console.log("Error: " + err);
-      }
-    };
-
-    if (selectedSize) {
-      getNeededCoin();
-    }
+    getNeededCoinSize();
   }, [selectedCompany, selectedSize]);
 
   return (
@@ -134,7 +128,7 @@ const Coins = (props) => {
             </select>
             <select
               id="size-select"
-              value={selectedSize || ""}
+              value={selectedSize === 111 ? t("all_sizes") : selectedSize}
               onChange={(e) => handleSizeChange(Number(e.target.value))}
               style={{
                 padding: "0.5rem 1rem",
@@ -150,8 +144,8 @@ const Coins = (props) => {
                 maxWidth: "300px",
               }}
             >
-              <option value="" disabled hidden>
-                Select a Size
+              <option key={111} value={111}>
+                {t("all-sizes")}
               </option>
               {sizes.map((size, index) => (
                 <option key={index} value={size}>
@@ -163,9 +157,13 @@ const Coins = (props) => {
 
           <hr className="border border-dark w-100"></hr>
 
-          <div className="text-center mt-2 mb-2">
+          <div className="text-center mt-2 mb-4">
             <p className="fs-5">{t("coin_sell_desc")}</p>
             <p className="fs-5">{t("coin_buy_desc")}</p>
+          </div>
+
+          <div className="text-center mb-2">
+            <h4 className="fw-bold">{selectedCompany.name}</h4>
           </div>
 
           <div className="table-responsive">
@@ -213,19 +211,21 @@ const Coins = (props) => {
                 {coins.map((coin) => (
                   <tr key={coin.size}>
                     <th style={{ fontWeight: "normal" }}>
-                      <span>{`${coin.coin}`}</span>
+                      <span>
+                        {coin.coin === 0 ? t("not_found") : coin.coin}
+                      </span>
                     </th>
                     <th style={{ fontWeight: "normal" }}>
-                      <span>{coin.factory}</span>
+                      <span>{coin.coin === 0 ? 0 : coin.factory}</span>
                     </th>
                     <th style={{ fontWeight: "normal" }}>
-                      <span>{coin.cashback}</span>
+                      <span>{coin.coin === 0 ? 0 : coin.cashback}</span>
                     </th>
                     <th style={{ fontWeight: "normal" }}>
-                      <span>{roundTo2Decimals(coin.sel)}</span>
+                      <span>{coin.coin === 0 ? 0 : Math.ceil(coin.sel)}</span>
                     </th>
                     <th style={{ fontWeight: "normal" }}>
-                      <span>{roundTo2Decimals(coin.pur)}</span>
+                      <span>{coin.coin === 0 ? 0 : Math.ceil(coin.pur)}</span>
                     </th>
                   </tr>
                 ))}

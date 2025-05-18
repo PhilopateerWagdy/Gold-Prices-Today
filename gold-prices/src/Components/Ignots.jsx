@@ -5,10 +5,6 @@ import axios from "axios";
 
 import HorzAdsense from "./HorzAdsense";
 
-function roundTo2Decimals(num) {
-  return Math.round(num * 100) / 100;
-}
-
 const Ignots = (props) => {
   const { t } = useTranslation();
 
@@ -133,7 +129,7 @@ const Ignots = (props) => {
             </select>
             <select
               id="size-select"
-              value={selectedSize === 111 ? t("all_sizes") : ""}
+              value={selectedSize === 111 ? t("all_sizes") : selectedSize}
               onChange={(e) => handleSizeChange(Number(e.target.value))}
               style={{
                 padding: "0.5rem 1rem",
@@ -149,9 +145,6 @@ const Ignots = (props) => {
                 maxWidth: "300px",
               }}
             >
-              <option value="" disabled hidden>
-                Select a Size
-              </option>
               <option key={111} value={111}>
                 {t("all-sizes")}
               </option>
@@ -165,9 +158,13 @@ const Ignots = (props) => {
 
           <hr className="border border-dark w-100"></hr>
 
-          <div className="text-center mt-2 mb-2">
+          <div className="text-center mt-2 mb-4">
             <p className="fs-5">{t("ingot_sell_desc")}</p>
             <p className="fs-5">{t("ingot_buy_desc")}</p>
+          </div>
+
+          <div className="text-center mb-2">
+            <h4 className="fw-bold">{selectedCompany.name}</h4>
           </div>
 
           <div className="table-responsive">
@@ -226,14 +223,10 @@ const Ignots = (props) => {
                       <span>{ingot.size === 0 ? 0 : ingot.cashback}</span>
                     </th>
                     <th style={{ fontWeight: "normal" }}>
-                      <span>
-                        {ingot.size === 0 ? 0 : roundTo2Decimals(ingot.sel)}
-                      </span>
+                      <span>{ingot.size === 0 ? 0 : Math.ceil(ingot.sel)}</span>
                     </th>
                     <th style={{ fontWeight: "normal" }}>
-                      <span>
-                        {ingot.size === 0 ? 0 : roundTo2Decimals(ingot.pur)}
-                      </span>
+                      <span>{ingot.size === 0 ? 0 : Math.ceil(ingot.pur)}</span>
                     </th>
                   </tr>
                 ))}

@@ -6,10 +6,6 @@ import Select from "react-select";
 
 import HorzAdsense from "./HorzAdsense";
 
-function roundTo2Decimals(num) {
-  return Math.round(num * 100) / 100;
-}
-
 const Home = (props) => {
   const { t } = useTranslation();
   const [selectedCurrency, setSelectedCurrency] = useState(props.countries[0]);
@@ -142,13 +138,13 @@ const Home = (props) => {
                   </th>
                   <td>
                     <span className="fs-5">
-                      {`${roundTo2Decimals(prices.k24_sel)} `}
+                      {`${Math.ceil(prices.k24_sel)} `}
                     </span>
                   </td>
                   {selectedCurrency.value === "EGP" && (
                     <td>
                       <span className="fs-5">
-                        {`${roundTo2Decimals(prices.gram_in_curr)} `}
+                        {`${Math.ceil(prices.gram_in_curr)} `}
                       </span>
                     </td>
                   )}
@@ -163,13 +159,13 @@ const Home = (props) => {
                   </th>
                   <td>
                     <span className="fs-5">
-                      {`${roundTo2Decimals(prices.k21_sel)} `}
+                      {`${Math.ceil(prices.k21_sel)} `}
                     </span>
                   </td>
                   {selectedCurrency.value === "EGP" && (
                     <td>
                       <span className="fs-5">
-                        {`${roundTo2Decimals(prices.k21_pur)} `}
+                        {`${Math.ceil(prices.k21_pur)} `}
                       </span>
                     </td>
                   )}
@@ -184,13 +180,13 @@ const Home = (props) => {
                   </th>
                   <td>
                     <span className="fs-5">
-                      {`${roundTo2Decimals(prices.k18_sel)} `}
+                      {`${Math.ceil(prices.k18_sel)} `}
                     </span>
                   </td>
                   {selectedCurrency.value === "EGP" && (
                     <td>
                       <span className="fs-5">
-                        {`${roundTo2Decimals(prices.k18_pur)} `}
+                        {`${Math.ceil(prices.k18_pur)} `}
                       </span>
                     </td>
                   )}
@@ -205,13 +201,13 @@ const Home = (props) => {
                   </th>
                   <td>
                     <span className="fs-5">
-                      {`${roundTo2Decimals(prices.k14_sel)} `}
+                      {`${Math.ceil(prices.k14_sel)} `}
                     </span>
                   </td>
                   {selectedCurrency.value === "EGP" && (
                     <td>
                       <span className="fs-5">
-                        {`${roundTo2Decimals(prices.k14_pur)} `}
+                        {`${Math.ceil(prices.k14_pur)} `}
                       </span>
                     </td>
                   )}
@@ -226,7 +222,7 @@ const Home = (props) => {
                   </th>
                   <td colSpan="2">
                     <span className="fs-5">
-                      {`${roundTo2Decimals(prices.ounce_price_usd)} $`}
+                      {`${Math.ceil(prices.ounce_price_usd)} $`}
                     </span>
                   </td>
                 </tr>
@@ -240,7 +236,7 @@ const Home = (props) => {
                   </th>
                   <td colSpan="2">
                     <span className="fs-5">
-                      {`${roundTo2Decimals(prices.ounce_in_curr)}`}
+                      {`${Math.ceil(prices.ounce_in_curr)}`}
                     </span>
                   </td>
                 </tr>
@@ -253,9 +249,7 @@ const Home = (props) => {
                     {t("coin_curr")}
                   </th>
                   <td colSpan="2">
-                    <span className="fs-5">
-                      {`${roundTo2Decimals(prices.coin)}`}
-                    </span>
+                    <span className="fs-5">{`${Math.ceil(prices.coin)}`}</span>
                   </td>
                 </tr>
                 <tr>
@@ -268,7 +262,7 @@ const Home = (props) => {
                   </th>
                   <td colSpan="2">
                     <span className="fs-5">
-                      {`${roundTo2Decimals(prices.usd_to_curr)}`}
+                      {`${Math.ceil(prices.usd_to_curr)}`}
                     </span>
                   </td>
                 </tr>
