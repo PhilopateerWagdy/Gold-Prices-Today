@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "../App";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import VerticalAdsense from "./VerticalAdsense";
@@ -9,7 +8,7 @@ import HorzAdsense from "./HorzAdsense";
 
 const Contact = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  const [submitted, setSubmitted] = useState(false);
 
   const [state, setState] = useState({
     name: "",
@@ -32,12 +31,12 @@ const Contact = () => {
       .post(`${process.env.REACT_APP_API_URL}/api/messages/`, postData)
       .then((response) => {
         console.log("Success:", response.data);
+        setSubmitted(true); // Show message
+        setTimeout(() => setSubmitted(false), 3000); // Hide after 3s (optional)
       })
       .catch((error) => {
         console.error("Error:", error);
       });
-
-    navigate("/");
   };
 
   const handleChange = (e) => {
@@ -108,6 +107,11 @@ const Contact = () => {
                   rows="5"
                 />
               </div>
+              {submitted && (
+                <div class="text-center alert alert-success" role="alert">
+                  {t("msg_sent")}
+                </div>
+              )}
               <button
                 style={{ height: "50px", width: "100px" }}
                 type="submit"

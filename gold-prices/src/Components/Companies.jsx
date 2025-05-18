@@ -34,7 +34,7 @@ function Companies() {
         <HorzAdsense />
       </div>
 
-      <div className="d-flex flex-row justify-content-center m-2">
+      <div className="d-flex flex-row justify-content-center m-3">
         <div className="d-flex flex-column justify-content-center align-items-center border border-dark w-100 h-100 p-3">
           <h3 className="text-center mb-4">{t("comp_title")}</h3>
 

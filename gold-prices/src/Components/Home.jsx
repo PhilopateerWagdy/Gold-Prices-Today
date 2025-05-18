@@ -6,6 +6,10 @@ import Select from "react-select";
 
 import HorzAdsense from "./HorzAdsense";
 
+function roundToTwo(num) {
+  return Math.round(num * 100) / 100;
+}
+
 const Home = (props) => {
   const { t } = useTranslation();
   const [selectedCurrency, setSelectedCurrency] = useState(props.countries[0]);
@@ -44,7 +48,7 @@ const Home = (props) => {
         <HorzAdsense />
       </div>
 
-      <div className="d-flex flex-row justify-content-center m-2">
+      <div className="d-flex flex-row justify-content-center m-3">
         <div className="d-flex flex-column justify-content-center align-items-center border border-dark w-100 h-100 p-3">
           <h3 className="mb-4">{t("title")}</h3>
 
@@ -222,7 +226,7 @@ const Home = (props) => {
                   </th>
                   <td colSpan="2">
                     <span className="fs-5">
-                      {`${Math.ceil(prices.ounce_price_usd)} $`}
+                      {`${roundToTwo(prices.ounce_price_usd)} $`}
                     </span>
                   </td>
                 </tr>
@@ -262,7 +266,7 @@ const Home = (props) => {
                   </th>
                   <td colSpan="2">
                     <span className="fs-5">
-                      {`${Math.ceil(prices.usd_to_curr)}`}
+                      {`${roundToTwo(prices.usd_to_curr)}`}
                     </span>
                   </td>
                 </tr>

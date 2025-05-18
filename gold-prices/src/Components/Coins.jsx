@@ -86,7 +86,7 @@ const Coins = (props) => {
       <div className="border border-dark mt-2 mb-4">
         <HorzAdsense />
       </div>
-      <div className="d-flex flex-row justify-content-center m-2">
+      <div className="d-flex flex-row justify-content-center m-3">
         <div className="d-flex flex-column justify-content-center align-items-center border border-dark w-100 h-100 p-3">
           <h3 className="text-center mb-4">{t("coins-title")}</h3>
 
@@ -158,8 +158,8 @@ const Coins = (props) => {
           <hr className="border border-dark w-100"></hr>
 
           <div className="text-center mt-2 mb-4">
-            <p className="fs-5">{t("coin_sell_desc")}</p>
-            <p className="fs-5">{t("coin_buy_desc")}</p>
+            <p>{t("coin_sell_desc")}</p>
+            <p>{t("coin_buy_desc")}</p>
           </div>
 
           <div className="text-center mb-2">
@@ -211,21 +211,27 @@ const Coins = (props) => {
                 {coins.map((coin) => (
                   <tr key={coin.size}>
                     <th style={{ fontWeight: "normal" }}>
+                      <span>{coin.coin === 0 ? selectedSize : coin.coin}</span>
+                    </th>
+                    <th style={{ fontWeight: "normal" }}>
                       <span>
-                        {coin.coin === 0 ? t("not_found") : coin.coin}
+                        {coin.coin === 0 ? t("not_found") : coin.factory}
                       </span>
                     </th>
                     <th style={{ fontWeight: "normal" }}>
-                      <span>{coin.coin === 0 ? 0 : coin.factory}</span>
+                      <span>
+                        {coin.coin === 0 ? t("not_found") : coin.cashback}
+                      </span>
                     </th>
                     <th style={{ fontWeight: "normal" }}>
-                      <span>{coin.coin === 0 ? 0 : coin.cashback}</span>
+                      <span>
+                        {coin.coin === 0 ? t("not_found") : Math.ceil(coin.sel)}
+                      </span>
                     </th>
                     <th style={{ fontWeight: "normal" }}>
-                      <span>{coin.coin === 0 ? 0 : Math.ceil(coin.sel)}</span>
-                    </th>
-                    <th style={{ fontWeight: "normal" }}>
-                      <span>{coin.coin === 0 ? 0 : Math.ceil(coin.pur)}</span>
+                      <span>
+                        {coin.coin === 0 ? t("not_found") : Math.ceil(coin.pur)}
+                      </span>
                     </th>
                   </tr>
                 ))}

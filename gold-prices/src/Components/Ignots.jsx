@@ -87,7 +87,7 @@ const Ignots = (props) => {
         <HorzAdsense />
       </div>
 
-      <div className="d-flex flex-row justify-content-center m-2">
+      <div className="d-flex flex-row justify-content-center m-3">
         <div className="d-flex flex-column justify-content-center align-items-center border border-dark w-100 h-100 p-3">
           <h3 className="text-center mb-4">{t("ingots-title")}</h3>
 
@@ -159,8 +159,8 @@ const Ignots = (props) => {
           <hr className="border border-dark w-100"></hr>
 
           <div className="text-center mt-2 mb-4">
-            <p className="fs-5">{t("ingot_sell_desc")}</p>
-            <p className="fs-5">{t("ingot_buy_desc")}</p>
+            <p>{t("ingot_sell_desc")}</p>
+            <p>{t("ingot_buy_desc")}</p>
           </div>
 
           <div className="text-center mb-2">
@@ -213,20 +213,32 @@ const Ignots = (props) => {
                   <tr key={ingot.size}>
                     <th style={{ fontWeight: "normal" }}>
                       <span>
-                        {ingot.size === 0 ? t("not_found") : ingot.size}
+                        {ingot.size === 0 ? selectedSize : ingot.size}
                       </span>
                     </th>
                     <th style={{ fontWeight: "normal" }}>
-                      <span>{ingot.size === 0 ? 0 : ingot.factory}</span>
+                      <span>
+                        {ingot.size === 0 ? t("not_found") : ingot.factory}
+                      </span>
                     </th>
                     <th style={{ fontWeight: "normal" }}>
-                      <span>{ingot.size === 0 ? 0 : ingot.cashback}</span>
+                      <span>
+                        {ingot.size === 0 ? t("not_found") : ingot.cashback}
+                      </span>
                     </th>
                     <th style={{ fontWeight: "normal" }}>
-                      <span>{ingot.size === 0 ? 0 : Math.ceil(ingot.sel)}</span>
+                      <span>
+                        {ingot.size === 0
+                          ? t("not_found")
+                          : Math.ceil(ingot.sel)}
+                      </span>
                     </th>
                     <th style={{ fontWeight: "normal" }}>
-                      <span>{ingot.size === 0 ? 0 : Math.ceil(ingot.pur)}</span>
+                      <span>
+                        {ingot.size === 0
+                          ? t("not_found")
+                          : Math.ceil(ingot.pur)}
+                      </span>
                     </th>
                   </tr>
                 ))}
