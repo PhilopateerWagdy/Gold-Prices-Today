@@ -8,7 +8,7 @@ const cors = require("cors");
 const priceRouter = require("./routes/Prices");
 const ignotsRouter = require("./routes/Ignots");
 const coinsRouter = require("./routes/Coins");
-const { getAllCompanies } = require("./routes/Companies");
+const companiesRouter = require("./routes/Companies");
 const messagesRouter = require("./routes/Messages");
 const apisRouter = require("./routes/APIs");
 
@@ -49,10 +49,9 @@ mongoose
 app.use("/api/gold-prices", priceRouter);
 app.use("/api/ignots", ignotsRouter);
 app.use("/api/coins", coinsRouter);
+app.use("/companies", companiesRouter);
 app.use("/api/messages", messagesRouter);
 app.use("/api/", apisRouter);
-
-app.get("/companies", getAllCompanies);
 
 // ------------------------------------------------------
 // update function that updates today's data record every min automatically

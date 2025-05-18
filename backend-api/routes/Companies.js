@@ -8,7 +8,8 @@ router.all("/", (req, res, nxt) => {
   nxt();
 });
 
-const getAllCompanies = async (req, res) => {
+// get all companies
+router.get("/", async (req, res) => {
   try {
     let companies = await Company.find();
 
@@ -19,21 +20,7 @@ const getAllCompanies = async (req, res) => {
       res.status(400).send("Can't get companies data.");
     }
   }
-};
-
-// // get all companies
-// router.get("/", async (req, res) => {
-//   try {
-//     let companies = await Company.find();
-
-//     res.status(200).json(companies);
-//   } catch (err) {
-//     for (let e in err.errors) {
-//       console.log(err.errors[e].message);
-//       res.status(400).send("Can't get companies data.");
-//     }
-//   }
-// });
+});
 
 // add company
 router.post("/", (req, res) => {
@@ -50,4 +37,4 @@ router.post("/", (req, res) => {
   }
 });
 
-module.exports = { getAllCompanies };
+module.exports = router;
