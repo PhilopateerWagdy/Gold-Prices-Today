@@ -46,10 +46,6 @@ mongoose
 // ------------------------------------------------------
 // CRUD operations on local object (on another module -> MVC pattern)
 
-app.get("/", (req, res) => {
-  res.send("hello in backend api.");
-});
-
 app.use("/api/gold-prices", priceRouter);
 app.use("/api/ignots", ignotsRouter);
 app.use("/api/coins", coinsRouter);
