@@ -164,7 +164,7 @@ const Ignots = (props) => {
           </div>
 
           <div className="text-center mb-2">
-            <h4 className="fw-bold">{selectedCompany.name}</h4>
+            <h4 className="fw-bold">{selectedCompany?.name || ""}</h4>
           </div>
 
           <div className="table-responsive">
