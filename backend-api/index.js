@@ -41,7 +41,10 @@ mongoose
   .then(() => {
     console.log("Connected to Database...");
   })
-  .catch((err) => console.log("Failed to connect to Database."));
+  .catch((err) => {
+    console.log("Failed to connect to Database.");
+    res.status(500).json({ error: "Database connection failed" });
+  });
 
 // ------------------------------------------------------
 // CRUD operations on local object (on another module -> MVC pattern)
