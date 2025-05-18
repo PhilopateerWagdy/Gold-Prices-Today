@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const Company = require("../database/CompaniesDBModel");
+const {
+  getAllCompanies,
+  addCompany,
+} = require("../controllers/CompaniesController");
 
 // Middleware message
 router.all("/", (req, res, nxt) => {
@@ -9,34 +13,9 @@ router.all("/", (req, res, nxt) => {
 });
 
 // get all companies
-router.get("/", async (req, res) => {
-  try {
-    let companies = await Company.find();
-
-    console.log("companies : " + companies);
-
-    res.status(200).json(companies);
-  } catch (err) {
-    for (let e in err.errors) {
-      console.log(err.errors[e].message);
-      res.status(400).send("Can't get companies data.");
-    }
-  }
-});
+router.get("/", getAllCompanies);
 
 // add company
-router.post("/", (req, res) => {
-  try {
-    const comp = new Company(req.body);
-    comp.save();
-
-    res.send("Company Sent!");
-  } catch (err) {
-    for (let e in err.errors) {
-      console.log(err.errors[e].message);
-      res.status(400).send("Can't Send Company.");
-    }
-  }
-});
+router.post("/", addCompany);
 
 module.exports = router;

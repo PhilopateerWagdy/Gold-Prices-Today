@@ -53,7 +53,7 @@ console.log("Using DB:", mongoose.connection.name);
 
 app.get("/", (req, res) => {
   try {
-    res.status(200).json("Hello fom Server");
+    res.status(200).json("Hello from Server");
   } catch (err) {
     console.log(err);
   }
@@ -62,7 +62,7 @@ app.get("/", (req, res) => {
 app.use("/api/gold-prices", priceRouter);
 app.use("/api/ignots", ignotsRouter);
 app.use("/api/coins", coinsRouter);
-app.use("/companies", companiesRouter);
+app.use("/api/companies", companiesRouter);
 app.use("/api/messages", messagesRouter);
 app.use("/api/", apisRouter);
 
