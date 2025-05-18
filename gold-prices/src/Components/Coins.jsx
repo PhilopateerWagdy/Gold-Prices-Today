@@ -82,7 +82,9 @@ const Coins = (props) => {
       }
     };
 
-    getNeededCoin();
+    if (selectedSize) {
+      getNeededCoin();
+    }
   }, [selectedCompany, selectedSize]);
 
   return (

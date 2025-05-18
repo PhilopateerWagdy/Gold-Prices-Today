@@ -10,7 +10,7 @@ const Header = (props) => {
   // You can map route paths to titles or other data
   const titles = {
     "/": "home",
-    "/gold-ignots-prices": "ingots",
+    "/gold-ingots-prices": "ingots",
     "/gold-coins-prices": "coins",
     "/gold-latest-news": "news",
     "/gold-companies": "companies",

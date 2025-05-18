@@ -33,7 +33,7 @@ const News = () => {
     <div className="d-flex flex-column min-vh-100">
       <div className="d-flex flex-row justify-content-center m-4">
         <div className="border border-dark w-75 h-100 p-3">
-          <h3 className="mb-4">{t("title")}</h3>
+          <h3 className="mb-4">{t("news-title")}</h3>
           <hr className="border border-dark w-100"></hr>
 
           <ul className="m-0 p-0 w-100" style={{ listStyle: "none" }}>

@@ -82,7 +82,9 @@ const Ignots = (props) => {
       }
     };
 
-    getNeededIngot();
+    if (selectedSize) {
+      getNeededIngot();
+    }
   }, [selectedCompany, selectedSize]);
 
   return (
