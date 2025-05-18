@@ -29,7 +29,7 @@ const Contact = () => {
     };
 
     axios
-      .post(`${process.env.REACT_APP_API_URL}/api/messages/`, postData)
+      .post(`${import.meta.env.REACT_APP_API_URL}/api/messages/`, postData)
       .then((response) => {
         console.log("Success:", response.data);
       })

@@ -32,7 +32,7 @@ const Ignots = (props) => {
     const getAllCompanies = async () => {
       try {
         const { data } = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/companies`
+          `${import.meta.env.REACT_APP_API_URL}/api/companies`
         );
         setCompanies(data);
         // Set the selected company if data exists
@@ -52,7 +52,9 @@ const Ignots = (props) => {
     const getNeededIngot = async () => {
       try {
         const { data } = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/ignots/${selectedCompany.name}`
+          `${import.meta.env.REACT_APP_API_URL}/api/ignots/${
+            selectedCompany.name
+          }`
         );
 
         setIngots(data);
@@ -73,7 +75,9 @@ const Ignots = (props) => {
     const getNeededIngot = async () => {
       try {
         const { data } = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/ignots/${selectedCompany.name}/${selectedSize}`
+          `${import.meta.env.REACT_APP_API_URL}/api/ignots/${
+            selectedCompany.name
+          }/${selectedSize}`
         );
 
         setIngots(data);

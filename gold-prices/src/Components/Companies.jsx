@@ -17,7 +17,7 @@ function Companies() {
     const getAllCompanies = async () => {
       try {
         const { data } = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/companies`
+          `${import.meta.env.REACT_APP_API_URL}/api/companies`
         );
         setCompanies(data);
       } catch (err) {
