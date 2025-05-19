@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const moment = require("moment");
+const moment = require("moment-timezone");
 
 // 2- create schema
 const MessageSchema = mongoose.Schema({
@@ -23,7 +23,7 @@ const MessageSchema = mongoose.Schema({
 
 MessageSchema.pre("save", function (next) {
   // Calculate `pur` before saving the document
-  this.date = moment().format("D-MM-YYYY HH:mm");
+  this.date = moment().tz("Africa/Cairo").format("D-MM-YYYY HH:mm");
   // Call next() to proceed with saving the document
   next();
 });

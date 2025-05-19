@@ -1,8 +1,6 @@
 const Gold = require("../database/GoldPriceDbModel");
 const moment = require("moment-timezone");
 
-const todaysDate = moment().format("D-MM-YYYY");
-
 // ---------------------------------------------------------------------------
 
 // separate function that saves data used in adding Prices
@@ -13,24 +11,11 @@ async function saveGoldPrice(data) {
 
 // update database today's record with the latest gold prices
 const updateDbRecord = async (req, res) => {
-  // ✅ Add CORS headers
-  // res.setHeader(
-  //   "Access-Control-Allow-Origin",
-  //   "https://gold-prices-today.vercel.app"
-  // );
-  // res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
-  // res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
-  // // ✅ Handle preflight OPTIONS request
-  // if (req.method === "OPTIONS") {
-  //   return res.status(200).end();
-  // }
-
   try {
     req.result.id = await Gold.countDocuments();
 
     let updatedPrice = await Gold.findOne({
-      date: moment().format("D-MM-YYYY"),
+      date: moment().tz("Africa/Cairo").format("D-MM-YYYY"),
     });
 
     // No prices for today found in DB

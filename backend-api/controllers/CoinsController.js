@@ -1,12 +1,14 @@
 const Coins = require("../database/CoinsDBModel");
 const Gold = require("../database/GoldPriceDbModel");
-const moment = require("moment");
+const moment = require("moment-timezone");
 
 let price = [];
 
 const getPrices = async () => {
   try {
-    let data = await Gold.find({ date: moment().format("D-MM-YYYY") }).lean();
+    let data = await Gold.find({
+      date: moment().tz("Africa/Cairo").format("D-MM-YYYY"),
+    }).lean();
     if (!data) {
       console.log("Can't find data.");
     } else {

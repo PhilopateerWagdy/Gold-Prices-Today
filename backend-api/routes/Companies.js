@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const Company = require("../database/CompaniesDBModel");
 const {
   getAllCompanies,
   addCompany,

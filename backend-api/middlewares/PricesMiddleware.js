@@ -1,4 +1,4 @@
-const moment = require("moment");
+const moment = require("moment-timezone");
 
 // ------------------------------------------------------------------------
 const convertCurrency = async (toCurrency, amount) => {
@@ -26,27 +26,35 @@ const convertCurrency = async (toCurrency, amount) => {
   }
 };
 
-// get gold prices data from (goldPricesz API)
 const getAPIGoldPrices = async (currency) => {
-  // let api = await API.find({ api_name: "gold" });
-  // const baseUrl = api[0].base_url;
-  // const apiKey = api[0].api_key;
   const baseUrl = "https://goldpricez.com/api/rates/currency";
-  const apiKey = "0b06ee5beca7937d30aa9dd6aebd797d0b06ee5b";
-  const url = `${baseUrl}/${currency}/measure/gram?X-API-KEY=${apiKey}`;
+  const apiKeys = [
+    "0b06ee5beca7937d30aa9dd6aebd797d0b06ee5b",
+    "6bea395b519ee78b09cb5c5157e085276bea395b",
+    "1f549f7b2aa83e49536e4dc0934800c11f549f7b",
+    "c99ba7582f191cbb4f03e7c26c78f5e8c99ba758",
+    "108812f1a1c93b156b0509b91a6c4f71108812f1",
+  ];
 
-  try {
-    const response = await fetch(url);
+  for (const apiKey of apiKeys) {
+    const url = `${baseUrl}/${currency}/measure/gram?X-API-KEY=${apiKey}`;
 
-    if (!response.ok) {
-      throw new Error(`API request failed with status ${response.status}`);
+    try {
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        console.warn(`API key failed (${apiKey}): Status ${response.status}`);
+        continue; // Try the next key
+      }
+
+      return await response.json(); // Success
+    } catch (error) {
+      console.error(`Error with API key (${apiKey}):`, error.message);
     }
-
-    return await response.json();
-  } catch (error) {
-    console.error("Error fetching data from API:", error);
-    throw error;
   }
+
+  // If all keys fail
+  throw new Error("All API keys failed to fetch gold prices.");
 };
 
 // ------------------------------------------------------------------------
@@ -55,8 +63,8 @@ const setCurrenciesData = async (req, res, nxt) => {
   try {
     req.result = {};
     req.result.currency = {};
-    req.result.date = moment().format("D-MM-YYYY");
-    req.result.timeUpdated = moment().format("HH:mm");
+    req.result.date = moment().tz("Africa/Cairo").format("D-MM-YYYY");
+    req.result.timeUpdated = moment().tz("Africa/Cairo").format("HH:mm");
 
     const { result } = await convertCurrency(req.params.curr, req.gram_in_usd);
 
