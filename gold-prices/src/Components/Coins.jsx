@@ -29,6 +29,7 @@ const Coins = (props) => {
   useEffect(() => {
     const getAllCompanies = async () => {
       try {
+        setLoading(true);
         const { data } = await axios.get(
           `${process.env.REACT_APP_API_URL}/api/companies`
         );
@@ -51,6 +52,7 @@ const Coins = (props) => {
   useEffect(() => {
     const getNeededCoinSize = async () => {
       try {
+        setLoading(true);
         // need all sizes
         if (selectedSize === 111) {
           const { data } = await axios.get(
