@@ -44,8 +44,6 @@ mongoose
 // ------------------------------------------------------
 // CRUD operations on local object (on another module -> MVC pattern)
 
-app.options("*", cors());
-
 app.get("/", (req, res) => {
   try {
     res.status(200).json("Hello from my gold Server");
