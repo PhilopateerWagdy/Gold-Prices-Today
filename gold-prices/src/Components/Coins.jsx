@@ -86,6 +86,9 @@ const Coins = (props) => {
       }
     };
 
+    if (selectedCompany) {
+      setSizes(selectedCompany?.coin);
+    }
     getNeededCoinSize();
   }, [selectedCompany, selectedSize]);
 

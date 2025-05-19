@@ -24,6 +24,7 @@ const Home = (props) => {
   useEffect(() => {
     const getGoldPrices = async () => {
       try {
+        setLoading(true);
         const { data } = await axios.get(
           `${process.env.REACT_APP_API_URL}/api/gold-prices/${selectedCurrency.value}`
         );

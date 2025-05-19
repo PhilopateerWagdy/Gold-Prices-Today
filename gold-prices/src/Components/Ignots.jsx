@@ -86,6 +86,9 @@ const Ignots = (props) => {
       }
     };
 
+    if (selectedCompany) {
+      setSizes(selectedCompany?.ignot_size);
+    }
     getNeededIngotSize();
   }, [selectedCompany, selectedSize]);
 
