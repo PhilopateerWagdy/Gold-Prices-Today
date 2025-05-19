@@ -1,5 +1,5 @@
 const Gold = require("../database/GoldPriceDbModel");
-const moment = require("moment");
+const moment = require("moment-timezone");
 
 const todaysDate = moment().format("D-MM-YYYY");
 
@@ -44,7 +44,7 @@ const updateDbRecord = async (req, res) => {
     else {
       // if needed currency not exist -> add it
       if (!updatedPrice.currency.has(req.params.curr)) {
-        updatedPrice.timeUpdated = moment().format("HH:mm");
+        updatedPrice.timeUpdated = moment().tz("Africa/Cairo").format("HH:mm");
         updatedPrice.currency.set(
           req.params.curr,
           req.result.currency[req.params.curr]
@@ -54,7 +54,7 @@ const updateDbRecord = async (req, res) => {
       }
       // if needed currency exist -> update it
       else {
-        updatedPrice.timeUpdated = moment().format("HH:mm");
+        updatedPrice.timeUpdated = moment().tz("Africa/Cairo").format("HH:mm");
         updatedPrice.currency.set(
           req.params.curr,
           req.result.currency[req.params.curr]
