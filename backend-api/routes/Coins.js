@@ -14,12 +14,9 @@ router.all("/", (req, res, nxt) => {
 });
 
 // get all ignots of company
-router.get("/:comp", getCompanyCoins);
+router.get("/:comp", updateCoinsData, getCompanyCoins);
 
 // get speific ignot size data
-router.get("/:comp/:coin", getCoinsSizeOfComp);
-
-// get all gold prices
-// router.put("/", updateCoinsData);
+router.get("/:comp/:coin", updateCoinsData, getCoinsSizeOfComp);
 
 module.exports = router;

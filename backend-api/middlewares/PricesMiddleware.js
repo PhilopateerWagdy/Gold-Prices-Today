@@ -64,6 +64,10 @@ const getAPIGoldPrices = async (currency) => {
 
 const setCurrenciesData = async (req, res, nxt) => {
   try {
+    req.body.currency = {};
+    req.body.date = moment().format("D-MM-YYYY");
+    req.body.timeUpdated = moment().format("HH:mm");
+
     for (let c of allCurrencies) {
       const { result } = await convertCurrency(c, req.gram_in_usd);
 
@@ -121,11 +125,8 @@ const updateGoldPrices = async (req, res, nxt) => {
       gram_in_egp,
     } = JSON.parse(result);
 
-    req.body.currency = {};
     req.gram_in_usd = gram_in_usd;
     req.ounce_in_usd = ounce_price_usd;
-    req.body.date = moment().format("D-MM-YYYY");
-    req.body.timeUpdated = moment().format("HH:mm");
 
     nxt();
   } catch (err) {
