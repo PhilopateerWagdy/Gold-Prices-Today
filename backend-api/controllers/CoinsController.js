@@ -28,9 +28,11 @@ const updateCoinsData = async (req, res) => {
       docs = await Coins.find({
         company_name: req.params.comp,
         coin: req.params.coin,
-      }); // get all documents
+      }).sort({ _id: 1 }); // get all documents
     } else {
-      docs = await Coins.find({ company_name: req.params.comp }); // get all documents
+      docs = await Coins.find({ company_name: req.params.comp }).sort({
+        _id: 1,
+      }); // get all documents
     }
 
     for (const doc of docs) {

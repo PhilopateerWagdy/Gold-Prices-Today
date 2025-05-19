@@ -16,7 +16,7 @@ const addCompany = (req, res) => {
 
 const getAllCompanies = async (req, res) => {
   try {
-    let companies = await Company.find();
+    let companies = await Company.find().sort({ _id: 1 });
 
     res.send(companies);
   } catch (err) {

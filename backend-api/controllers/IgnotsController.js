@@ -28,9 +28,11 @@ const updateIgnotsData = async (req, res) => {
       docs = await Ignots.find({
         company_name: req.params.comp,
         size: req.params.size,
-      }); // get all documents
+      }).sort({ _id: 1 }); // get all documents
     } else {
-      docs = await Ignots.find({ company_name: req.params.comp }); // get all documents
+      docs = await Ignots.find({ company_name: req.params.comp }).sort({
+        _id: 1,
+      }); // get all documents
     }
 
     for (const doc of docs) {
