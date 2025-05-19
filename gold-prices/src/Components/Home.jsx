@@ -14,6 +14,7 @@ const Home = (props) => {
   const { t } = useTranslation();
   const [selectedCurrency, setSelectedCurrency] = useState(props.countries[0]);
   const [prices, setPrices] = useState({});
+  const [loading, setLoading] = useState(true);
   const isMobile = window.innerWidth <= 768;
 
   const handleChange = (selectedOption) => {
@@ -30,6 +31,8 @@ const Home = (props) => {
         setPrices(data);
       } catch (err) {
         console.log("Error: " + err);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -142,13 +145,25 @@ const Home = (props) => {
                   </th>
                   <td>
                     <span className="fs-5">
-                      {`${Math.ceil(prices.k24_sel)} `}
+                      {loading ? (
+                        <div class="spinner-border text-dark" role="status">
+                          <span class="sr-only">Loading...</span>
+                        </div>
+                      ) : (
+                        `${Math.ceil(prices.k24_sel)} `
+                      )}
                     </span>
                   </td>
                   {selectedCurrency.value === "EGP" && (
                     <td>
                       <span className="fs-5">
-                        {`${Math.ceil(prices.gram_in_curr)} `}
+                        {loading ? (
+                          <div class="spinner-border text-dark" role="status">
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                        ) : (
+                          `${Math.ceil(prices.gram_in_curr)} `
+                        )}
                       </span>
                     </td>
                   )}
@@ -163,13 +178,25 @@ const Home = (props) => {
                   </th>
                   <td>
                     <span className="fs-5">
-                      {`${Math.ceil(prices.k21_sel)} `}
+                      {loading ? (
+                        <div class="spinner-border text-dark" role="status">
+                          <span class="sr-only">Loading...</span>
+                        </div>
+                      ) : (
+                        `${Math.ceil(prices.k21_sel)} `
+                      )}
                     </span>
                   </td>
                   {selectedCurrency.value === "EGP" && (
                     <td>
                       <span className="fs-5">
-                        {`${Math.ceil(prices.k21_pur)} `}
+                        {loading ? (
+                          <div class="spinner-border text-dark" role="status">
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                        ) : (
+                          `${Math.ceil(prices.k21_pur)} `
+                        )}
                       </span>
                     </td>
                   )}
@@ -184,13 +211,25 @@ const Home = (props) => {
                   </th>
                   <td>
                     <span className="fs-5">
-                      {`${Math.ceil(prices.k18_sel)} `}
+                      {loading ? (
+                        <div class="spinner-border text-dark" role="status">
+                          <span class="sr-only">Loading...</span>
+                        </div>
+                      ) : (
+                        `${Math.ceil(prices.k18_sel)} `
+                      )}
                     </span>
                   </td>
                   {selectedCurrency.value === "EGP" && (
                     <td>
                       <span className="fs-5">
-                        {`${Math.ceil(prices.k18_pur)} `}
+                        {loading ? (
+                          <div class="spinner-border text-dark" role="status">
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                        ) : (
+                          `${Math.ceil(prices.k18_pur)} `
+                        )}
                       </span>
                     </td>
                   )}
@@ -205,13 +244,25 @@ const Home = (props) => {
                   </th>
                   <td>
                     <span className="fs-5">
-                      {`${Math.ceil(prices.k14_sel)} `}
+                      {loading ? (
+                        <div class="spinner-border text-dark" role="status">
+                          <span class="sr-only">Loading...</span>
+                        </div>
+                      ) : (
+                        `${Math.ceil(prices.k14_sel)} `
+                      )}
                     </span>
                   </td>
                   {selectedCurrency.value === "EGP" && (
                     <td>
                       <span className="fs-5">
-                        {`${Math.ceil(prices.k14_pur)} `}
+                        {loading ? (
+                          <div class="spinner-border text-dark" role="status">
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                        ) : (
+                          `${Math.ceil(prices.k14_pur)} `
+                        )}
                       </span>
                     </td>
                   )}
@@ -226,7 +277,13 @@ const Home = (props) => {
                   </th>
                   <td colSpan="2">
                     <span className="fs-5">
-                      {`${roundToTwo(prices.ounce_price_usd)} $`}
+                      {loading ? (
+                        <div class="spinner-border text-dark" role="status">
+                          <span class="sr-only">Loading...</span>
+                        </div>
+                      ) : (
+                        `${roundToTwo(prices.ounce_price_usd)} $`
+                      )}
                     </span>
                   </td>
                 </tr>
@@ -240,7 +297,13 @@ const Home = (props) => {
                   </th>
                   <td colSpan="2">
                     <span className="fs-5">
-                      {`${Math.ceil(prices.ounce_in_curr)}`}
+                      {loading ? (
+                        <div class="spinner-border text-dark" role="status">
+                          <span class="sr-only">Loading...</span>
+                        </div>
+                      ) : (
+                        `${Math.ceil(prices.ounce_in_curr)}`
+                      )}
                     </span>
                   </td>
                 </tr>
@@ -253,7 +316,15 @@ const Home = (props) => {
                     {t("coin_curr")}
                   </th>
                   <td colSpan="2">
-                    <span className="fs-5">{`${Math.ceil(prices.coin)}`}</span>
+                    <span className="fs-5">
+                      {loading ? (
+                        <div class="spinner-border text-dark" role="status">
+                          <span class="sr-only">Loading...</span>
+                        </div>
+                      ) : (
+                        `${Math.ceil(prices.coin)}`
+                      )}
+                    </span>
                   </td>
                 </tr>
                 <tr>
@@ -266,7 +337,13 @@ const Home = (props) => {
                   </th>
                   <td colSpan="2">
                     <span className="fs-5">
-                      {`${roundToTwo(prices.usd_to_curr)}`}
+                      {loading ? (
+                        <div class="spinner-border text-dark" role="status">
+                          <span class="sr-only">Loading...</span>
+                        </div>
+                      ) : (
+                        `${roundToTwo(prices.usd_to_curr)}`
+                      )}
                     </span>
                   </td>
                 </tr>

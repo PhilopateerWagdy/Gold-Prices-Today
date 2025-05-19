@@ -16,6 +16,8 @@ const Coins = (props) => {
 
   const [coins, setCoins] = useState([]);
 
+  const [loading, setLoading] = useState(true);
+
   const handleChange = (selectedOption) => {
     setSelectedCompany(selectedOption); // Set the selected company
   };
@@ -38,6 +40,8 @@ const Coins = (props) => {
         }
       } catch (err) {
         console.log("Error: " + err);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -75,6 +79,8 @@ const Coins = (props) => {
         }
       } catch (err) {
         console.log("Error: " + err);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -211,26 +217,68 @@ const Coins = (props) => {
                 {coins.map((coin) => (
                   <tr key={coin.size}>
                     <th style={{ fontWeight: "normal" }}>
-                      <span>{coin.coin === 0 ? selectedSize : coin.coin}</span>
-                    </th>
-                    <th style={{ fontWeight: "normal" }}>
                       <span>
-                        {coin.coin === 0 ? t("not_found") : coin.factory}
+                        {loading ? (
+                          <div class="spinner-border text-dark" role="status">
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                        ) : coin.coin === 0 ? (
+                          selectedSize
+                        ) : (
+                          coin.coin
+                        )}
                       </span>
                     </th>
                     <th style={{ fontWeight: "normal" }}>
                       <span>
-                        {coin.coin === 0 ? t("not_found") : coin.cashback}
+                        {loading ? (
+                          <div class="spinner-border text-dark" role="status">
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                        ) : coin.coin === 0 ? (
+                          t("not_found")
+                        ) : (
+                          coin.factory
+                        )}
                       </span>
                     </th>
                     <th style={{ fontWeight: "normal" }}>
                       <span>
-                        {coin.coin === 0 ? t("not_found") : Math.ceil(coin.sel)}
+                        {loading ? (
+                          <div class="spinner-border text-dark" role="status">
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                        ) : coin.coin === 0 ? (
+                          t("not_found")
+                        ) : (
+                          coin.cashback
+                        )}
                       </span>
                     </th>
                     <th style={{ fontWeight: "normal" }}>
                       <span>
-                        {coin.coin === 0 ? t("not_found") : Math.ceil(coin.pur)}
+                        {loading ? (
+                          <div class="spinner-border text-dark" role="status">
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                        ) : coin.coin === 0 ? (
+                          t("not_found")
+                        ) : (
+                          Math.ceil(coin.sel)
+                        )}
+                      </span>
+                    </th>
+                    <th style={{ fontWeight: "normal" }}>
+                      <span>
+                        {loading ? (
+                          <div class="spinner-border text-dark" role="status">
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                        ) : coin.coin === 0 ? (
+                          t("not_found")
+                        ) : (
+                          Math.ceil(coin.pur)
+                        )}
                       </span>
                     </th>
                   </tr>

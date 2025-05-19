@@ -16,6 +16,8 @@ const Ignots = (props) => {
 
   const [ingots, setIngots] = useState([]);
 
+  const [loading, setLoading] = useState(true);
+
   const handleChange = (selectedOption) => {
     setSelectedCompany(selectedOption); // Set the selected company
   };
@@ -38,6 +40,8 @@ const Ignots = (props) => {
         }
       } catch (err) {
         console.log("Error: " + err);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -75,6 +79,8 @@ const Ignots = (props) => {
         }
       } catch (err) {
         //console.log("Error: " + err);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -213,31 +219,67 @@ const Ignots = (props) => {
                   <tr key={ingot.size}>
                     <th style={{ fontWeight: "normal" }}>
                       <span>
-                        {ingot.size === 0 ? selectedSize : ingot.size}
+                        {loading ? (
+                          <div class="spinner-border text-dark" role="status">
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                        ) : ingot.size === 0 ? (
+                          selectedSize
+                        ) : (
+                          ingot.size
+                        )}
                       </span>
                     </th>
                     <th style={{ fontWeight: "normal" }}>
                       <span>
-                        {ingot.size === 0 ? t("not_found") : ingot.factory}
+                        {loading ? (
+                          <div class="spinner-border text-dark" role="status">
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                        ) : ingot.size === 0 ? (
+                          t("not_found")
+                        ) : (
+                          ingot.factory
+                        )}
                       </span>
                     </th>
                     <th style={{ fontWeight: "normal" }}>
                       <span>
-                        {ingot.size === 0 ? t("not_found") : ingot.cashback}
+                        {loading ? (
+                          <div class="spinner-border text-dark" role="status">
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                        ) : ingot.size === 0 ? (
+                          t("not_found")
+                        ) : (
+                          ingot.cashback
+                        )}
                       </span>
                     </th>
                     <th style={{ fontWeight: "normal" }}>
                       <span>
-                        {ingot.size === 0
-                          ? t("not_found")
-                          : Math.ceil(ingot.sel)}
+                        {loading ? (
+                          <div class="spinner-border text-dark" role="status">
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                        ) : ingot.size === 0 ? (
+                          t("not_found")
+                        ) : (
+                          Math.ceil(ingot.sel)
+                        )}
                       </span>
                     </th>
                     <th style={{ fontWeight: "normal" }}>
                       <span>
-                        {ingot.size === 0
-                          ? t("not_found")
-                          : Math.ceil(ingot.pur)}
+                        {loading ? (
+                          <div class="spinner-border text-dark" role="status">
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                        ) : ingot.size === 0 ? (
+                          t("not_found")
+                        ) : (
+                          Math.ceil(ingot.pur)
+                        )}
                       </span>
                     </th>
                   </tr>
