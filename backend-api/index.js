@@ -63,23 +63,24 @@ app.use("/api/", apisRouter);
 
 // ------------------------------------------------------
 // cron a function to fired every day
-// const BASE_URL = "http://localhost:3001";
-// const CURRENCY = "EGP";
+const CURRENCY = "EGP";
 
-// // Schedule cron to run daily at 00:01
-// cron.schedule("1 0 * * *", async () => {
-//   try {
-//     console.log(
-//       `[${new Date().toISOString()}] Triggering gold price update for ${CURRENCY}`
-//     );
+// Schedule cron to run daily at 00:01
+cron.schedule("1 0 * * *", async () => {
+  try {
+    console.log(
+      `[${new Date().toISOString()}] Triggering gold price update for ${CURRENCY}`
+    );
 
-//     const response = await axios.get(`${BASE_URL}/api/gold-prices/${CURRENCY}`);
+    const response = await axios.get(
+      `${process.env.CLIENT_URL}/api/gold-prices/${CURRENCY}`
+    );
 
-//     console.log("Update successful:", response.data);
-//   } catch (error) {
-//     console.error("Error triggering update:", error.message);
-//   }
-// });
+    console.log("Update successful:", response.data);
+  } catch (error) {
+    console.error("Error triggering update:", error.message);
+  }
+});
 
 // ------------------------------------------------------
 // listen to users requests
