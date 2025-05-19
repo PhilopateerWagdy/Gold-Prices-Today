@@ -34,6 +34,11 @@ const getAPIGoldPrices = async (currency) => {
     "1f549f7b2aa83e49536e4dc0934800c11f549f7b",
     "c99ba7582f191cbb4f03e7c26c78f5e8c99ba758",
     "108812f1a1c93b156b0509b91a6c4f71108812f1",
+    "12879a129df3ab24943901124b4caaa912879a12",
+    "4c34b658b98ec37b42cfebdd372ed2744c34b658",
+    "e63b47f97489e7c9ec077cb61d970b3fe63b47f9",
+    "76fe71cfb3e377f801fa4dc2c6d3ca3d76fe71cf",
+    "a9ee0184e4955be3947a4625142bba67a9ee0184",
   ];
 
   for (const apiKey of apiKeys) {

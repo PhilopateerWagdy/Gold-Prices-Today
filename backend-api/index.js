@@ -2,10 +2,10 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
-const axios = require("axios");
-const cron = require("node-cron");
-const { CronJob } = require("cron");
-const moment = require("moment-timezone");
+// const axios = require("axios");
+// const cron = require("node-cron");
+// const { CronJob } = require("cron");
+// const moment = require("moment-timezone");
 
 const priceRouter = require("./routes/Prices");
 const ignotsRouter = require("./routes/Ignots");
@@ -65,36 +65,35 @@ app.use("/api/", apisRouter);
 
 // ------------------------------------------------------
 // cron a function to fired every day
-const CURRENCY = "EGP";
+// const CURRENCY = "EGP";
+// // Schedule cron to run daily at 00:01
+// const job = new CronJob(
+//   "30 2 * * *", // At 12:01 AM
+//   async () => {
+//     try {
+//       console.log(
+//         `[${moment()
+//           .tz("Africa/Cairo")
+//           .format(
+//             "D-MM-YYYY HH:mm"
+//           )}] Triggering gold price update for ${CURRENCY}`
+//       );
 
-// Schedule cron to run daily at 00:01
-const job = new CronJob(
-  "30 2 * * *", // At 12:01 AM
-  async () => {
-    try {
-      console.log(
-        `[${moment()
-          .tz("Africa/Cairo")
-          .format(
-            "D-MM-YYYY HH:mm"
-          )}] Triggering gold price update for ${CURRENCY}`
-      );
+//       const response = await axios.get(
+//         `${process.env.CLIENT_URL}/api/gold-prices/${CURRENCY}`
+//       );
 
-      const response = await axios.get(
-        `${process.env.CLIENT_URL}/api/gold-prices/${CURRENCY}`
-      );
+//       console.log("CRON successful:", response.data);
+//     } catch (error) {
+//       console.error("CRON Error triggering update:", error.message);
+//     }
+//   },
+//   null,
+//   true, // Start the job immediately
+//   "Africa/Cairo" // <== Set the time zone here
+// );
 
-      console.log("CRON successful:", response.data);
-    } catch (error) {
-      console.error("CRON Error triggering update:", error.message);
-    }
-  },
-  null,
-  true, // Start the job immediately
-  "Africa/Cairo" // <== Set the time zone here
-);
-
-job.start();
+// job.start();
 
 // ------------------------------------------------------
 // listen to users requests
