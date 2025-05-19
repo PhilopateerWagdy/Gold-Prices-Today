@@ -1,8 +1,6 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const cron = require("node-cron");
-const moment = require("moment");
 const cors = require("cors");
 
 const priceRouter = require("./routes/Prices");
@@ -11,16 +9,6 @@ const coinsRouter = require("./routes/Coins");
 const companiesRouter = require("./routes/Companies");
 const messagesRouter = require("./routes/Messages");
 const apisRouter = require("./routes/APIs");
-
-const {
-  updateGoldPrices,
-  setCurrenciesData,
-} = require("./middlewares/PricesMiddleware");
-
-const {
-  getAllPrices,
-  updateDbRecord,
-} = require("./controllers/PricesController");
 
 // set port number to listen requests from users on it
 require("dotenv").config();
@@ -69,69 +57,6 @@ app.use("/api/coins", coinsRouter);
 app.use("/api/companies", companiesRouter);
 app.use("/api/messages", messagesRouter);
 app.use("/api/", apisRouter);
-
-// ------------------------------------------------------
-// update function that updates today's data record every min automatically
-function myScheduledFunction() {
-  console.log("⏰ Cron triggered at: " + moment().format("HH:mm"));
-
-  // Fake req and res
-  const req = {
-    body: {},
-    params: {},
-    query: {},
-  };
-
-  const res = {
-    send: (data) => console.log(data),
-    status: (code) => ({ send: (msg) => console.error(`Error ${code}:`, msg) }),
-  };
-
-  // Manually chain the middlewares using next()
-  const next1 = async (err) => {
-    if (err) return console.error("Error in updateGoldPrices:", err);
-
-    const next2 = async (err2) => {
-      if (err2) return console.error("Error in setCurrenciesData:", err2);
-
-      const next3 = async (err3) => {
-        if (err3) return console.error("Error in setCurrenciesData:", err3);
-
-        // Now that the first two middlewares have finished, call the next handler
-        try {
-          await getAllPrices(req, res); // Fire the updateDbRecord handler
-        } catch (err3) {
-          console.error("Error in getAllPrices:", err3);
-        }
-      };
-
-      // Now that the first two middlewares have finished, call the next handler
-      try {
-        await updateDbRecord(req, res, next3); // Fire the updateDbRecord handler
-      } catch (err3) {
-        next3(err3);
-      }
-    };
-
-    try {
-      await setCurrenciesData(req, res, next2); // Fire setCurrenciesData middleware
-    } catch (err2) {
-      next2(err2); // If error happens, call the next2 function with the error
-    }
-  };
-
-  try {
-    updateGoldPrices(req, res, next1); // Fire the first middleware (updateGoldPrices)
-  } catch (err) {
-    next1(err); // If error happens, call the next1 function with the error
-  }
-
-  // Call the function again after 1 minute
-  setTimeout(myScheduledFunction, 60000);
-}
-
-// Start the function once
-myScheduledFunction();
 
 // ------------------------------------------------------
 // listen to users requests
