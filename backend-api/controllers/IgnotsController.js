@@ -3,7 +3,6 @@ const Gold = require("../database/GoldPriceDbModel");
 const moment = require("moment");
 
 let price = [];
-const companiesArr = [];
 
 const getPrices = async () => {
   try {
@@ -19,12 +18,21 @@ const getPrices = async () => {
   }
 };
 
-const updateIgnotsData = async (req, res, nxt) => {
+const updateIgnotsData = async (req, res) => {
   try {
     price.splice(0, price.length);
     await getPrices();
 
-    const docs = await Ignots.find({}); // get all documents
+    let docs = [];
+    if (req.params.comp && req.params.size) {
+      docs = await Ignots.find({
+        company_name: req.params.comp,
+        size: req.params.size,
+      }); // get all documents
+    } else {
+      docs = await Ignots.find({ company_name: req.params.comp }); // get all documents
+    }
+
     for (const doc of docs) {
       doc.gmpurprice = price[0];
       doc.gmselprice = price[1];
@@ -35,7 +43,8 @@ const updateIgnotsData = async (req, res, nxt) => {
 
     price.splice(0, price.length);
     console.log("Ignots Data Updated.");
-    nxt();
+
+    res.send(docs);
   } catch (err) {
     for (let e in err.errors) {
       console.log(err.errors[e].message);
@@ -44,33 +53,4 @@ const updateIgnotsData = async (req, res, nxt) => {
   }
 };
 
-const getCompanyIgnots = async (req, res) => {
-  try {
-    let ignots = await Ignots.find({ company_name: req.params.comp });
-
-    res.send(ignots);
-  } catch (err) {
-    for (let e in err.errors) {
-      console.log(err.errors[e].message);
-      res.status(400).send("Can't get ignots data.");
-    }
-  }
-};
-
-const getIgnotsSizeOfComp = async (req, res) => {
-  try {
-    let ignots = await Ignots.find({
-      company_name: req.params.comp,
-      size: req.params.size,
-    });
-
-    res.send(ignots);
-  } catch (err) {
-    for (let e in err.errors) {
-      console.log(err.errors[e].message);
-      res.status(400).send("Can't get ignots data.");
-    }
-  }
-};
-
-module.exports = { getCompanyIgnots, getIgnotsSizeOfComp, updateIgnotsData };
+module.exports = { updateIgnotsData };

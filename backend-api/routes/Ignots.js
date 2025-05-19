@@ -1,11 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const {
-  getCompanyIgnots,
-  getIgnotsSizeOfComp,
-  updateIgnotsData,
-} = require("../controllers/IgnotsController");
+const { updateIgnotsData } = require("../controllers/IgnotsController");
 
 // Middleware message
 router.all("/", (req, res, nxt) => {
@@ -14,9 +10,9 @@ router.all("/", (req, res, nxt) => {
 });
 
 // get all ignots of company
-router.get("/:comp", updateIgnotsData, getCompanyIgnots);
+router.get("/:comp", updateIgnotsData);
 
 // get speific ignot size data
-router.get("/:comp/:size", updateIgnotsData, getIgnotsSizeOfComp);
+router.get("/:comp/:size", updateIgnotsData);
 
 module.exports = router;

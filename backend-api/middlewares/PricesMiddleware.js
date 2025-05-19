@@ -1,24 +1,6 @@
-const API = require("../database/APIsDataDBModel");
 const moment = require("moment");
-const axios = require("axios");
 
-const allCurrencies = [
-  "EGP",
-  "SAR",
-  "SYP",
-  "TND",
-  "AED",
-  "YER",
-  "QAR",
-  "ILS",
-  "OMR",
-  "MAD",
-  "LBP",
-  "KWD",
-  "JOD",
-  "IQD",
-];
-
+// ------------------------------------------------------------------------
 const convertCurrency = async (toCurrency, amount) => {
   // let api = await API.find({ api_name: "currency" });
   // const apiKey = api[0].api_key;
@@ -67,42 +49,34 @@ const getAPIGoldPrices = async (currency) => {
   }
 };
 
+// ------------------------------------------------------------------------
+
 const setCurrenciesData = async (req, res, nxt) => {
   try {
-    req.body.currency = {};
-    req.body.date = moment().format("D-MM-YYYY");
-    req.body.timeUpdated = moment().format("HH:mm");
+    req.result = {};
+    req.result.currency = {};
+    req.result.date = moment().format("D-MM-YYYY");
+    req.result.timeUpdated = moment().format("HH:mm");
 
     const { result } = await convertCurrency(req.params.curr, req.gram_in_usd);
 
     let gram_in_curr = Number(result);
-    let k24_sel = gram_in_curr - (req.params.curr == "EGP" ? 23 : 0);
-    let k21_pur = gram_in_curr * (21 / 24);
-    let k21_sel =
-      gram_in_curr * (21 / 24) - (req.params.curr == "EGP" ? 20 : 0);
-    let k18_pur = gram_in_curr * (18 / 24);
-    let k18_sel =
-      gram_in_curr * (18 / 24) - (req.params.curr == "EGP" ? 17 : 0);
-    let k14_pur = gram_in_curr * (14 / 24);
-    let k14_sel =
-      gram_in_curr * (14 / 24) - (req.params.curr == "EGP" ? 13 : 0);
-    let coin = k21_pur * 8;
 
-    req.body.currency[req.params.curr] = {
+    req.result.currency[req.params.curr] = {
       curr: req.params.curr,
       ounce_price_usd: req.ounce_in_usd,
       gram_in_usd: req.gram_in_usd,
       usd_to_curr: Number(gram_in_curr / req.gram_in_usd),
       ounce_in_curr: gram_in_curr * 31.1,
       gram_in_curr: gram_in_curr,
-      k24_sel: k24_sel,
-      k21_pur: k21_pur,
-      k21_sel: k21_sel,
-      k18_pur: k18_pur,
-      k18_sel: k18_sel,
-      k14_pur: k14_pur,
-      k14_sel: k14_sel,
-      coin: coin,
+      k24_sel: gram_in_curr - (req.params.curr == "EGP" ? 23 : 0),
+      k21_pur: gram_in_curr * (21 / 24),
+      k21_sel: gram_in_curr * (21 / 24) - (req.params.curr == "EGP" ? 20 : 0),
+      k18_pur: gram_in_curr * (18 / 24),
+      k18_sel: gram_in_curr * (18 / 24) - (req.params.curr == "EGP" ? 17 : 0),
+      k14_pur: gram_in_curr * (14 / 24),
+      k14_sel: gram_in_curr * (14 / 24) - (req.params.curr == "EGP" ? 13 : 0),
+      coin: gram_in_curr * (21 / 24) * 8,
     };
 
     nxt();

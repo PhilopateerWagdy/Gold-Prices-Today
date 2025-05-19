@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
+const axios = require("axios");
+const cron = require("node-cron");
 
 const priceRouter = require("./routes/Prices");
 const ignotsRouter = require("./routes/Ignots");
@@ -58,6 +60,26 @@ app.use("/api/coins", coinsRouter);
 app.use("/api/companies", companiesRouter);
 app.use("/api/messages", messagesRouter);
 app.use("/api/", apisRouter);
+
+// ------------------------------------------------------
+// cron a function to fired every day
+// const BASE_URL = "http://localhost:3001";
+// const CURRENCY = "EGP";
+
+// // Schedule cron to run daily at 00:01
+// cron.schedule("1 0 * * *", async () => {
+//   try {
+//     console.log(
+//       `[${new Date().toISOString()}] Triggering gold price update for ${CURRENCY}`
+//     );
+
+//     const response = await axios.get(`${BASE_URL}/api/gold-prices/${CURRENCY}`);
+
+//     console.log("Update successful:", response.data);
+//   } catch (error) {
+//     console.error("Error triggering update:", error.message);
+//   }
+// });
 
 // ------------------------------------------------------
 // listen to users requests

@@ -3,7 +3,6 @@ const Gold = require("../database/GoldPriceDbModel");
 const moment = require("moment");
 
 let price = [];
-const companiesArr = [];
 
 const getPrices = async () => {
   try {
@@ -19,12 +18,21 @@ const getPrices = async () => {
   }
 };
 
-const updateCoinsData = async (req, res, nxt) => {
+const updateCoinsData = async (req, res) => {
   try {
     price.splice(0, price.length);
     await getPrices();
 
-    const docs = await Coins.find({}); // get all documents
+    let docs = [];
+    if (req.params.comp && req.params.coin) {
+      docs = await Coins.find({
+        company_name: req.params.comp,
+        coin: req.params.coin,
+      }); // get all documents
+    } else {
+      docs = await Coins.find({ company_name: req.params.comp }); // get all documents
+    }
+
     for (const doc of docs) {
       doc.gmpurprice = price[0];
       doc.gmselprice = price[1];
@@ -34,8 +42,8 @@ const updateCoinsData = async (req, res, nxt) => {
     }
 
     price.splice(0, price.length);
-    console.log("Ignots Data Updated.");
-    nxt();
+    console.log("Coins Data Updated.");
+    res.send(docs);
   } catch (err) {
     for (let e in err.errors) {
       console.log(err.errors[e].message);
@@ -44,33 +52,4 @@ const updateCoinsData = async (req, res, nxt) => {
   }
 };
 
-const getCompanyCoins = async (req, res) => {
-  try {
-    let coins = await Coins.find({ company_name: req.params.comp });
-
-    res.send(coins);
-  } catch (err) {
-    for (let e in err.errors) {
-      console.log(err.errors[e].message);
-      res.status(400).send("Can't get coins data.");
-    }
-  }
-};
-
-const getCoinsSizeOfComp = async (req, res) => {
-  try {
-    let coins = await Coins.find({
-      company_name: req.params.comp,
-      coin: req.params.coin,
-    });
-
-    res.send(coins);
-  } catch (err) {
-    for (let e in err.errors) {
-      console.log(err.errors[e].message);
-      res.status(400).send("Can't get coins data.");
-    }
-  }
-};
-
-module.exports = { getCompanyCoins, getCoinsSizeOfComp, updateCoinsData };
+module.exports = { updateCoinsData };
