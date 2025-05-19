@@ -72,7 +72,7 @@ app.use("/api/", apisRouter);
 
 // ------------------------------------------------------
 // update function that updates today's data record every min automatically
-cron.schedule("* * * * *", () => {
+function myScheduledFunction() {
   console.log("⏰ Cron triggered at: " + moment().format("HH:mm"));
 
   // Fake req and res
@@ -125,7 +125,13 @@ cron.schedule("* * * * *", () => {
   } catch (err) {
     next1(err); // If error happens, call the next1 function with the error
   }
-});
+
+  // Call the function again after 1 minute
+  setTimeout(myScheduledFunction, 60000);
+}
+
+// Start the function once
+myScheduledFunction();
 
 // ------------------------------------------------------
 // listen to users requests
