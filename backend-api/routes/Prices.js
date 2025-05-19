@@ -6,10 +6,7 @@ const {
   setCurrenciesData,
 } = require("../middlewares/PricesMiddleware");
 
-const {
-  getAllPrices,
-  updateDbRecord,
-} = require("../controllers/PricesController");
+const { updateDbRecord } = require("../controllers/PricesController");
 
 // Middleware message
 router.all("/:curr", (req, res, nxt) => {
@@ -18,12 +15,6 @@ router.all("/:curr", (req, res, nxt) => {
 });
 
 // get gold prices by specific currency
-router.get(
-  "/:curr",
-  updateGoldPrices,
-  setCurrenciesData,
-  updateDbRecord,
-  getAllPrices
-);
+router.get("/:curr", updateGoldPrices, setCurrenciesData, updateDbRecord);
 
 module.exports = router;

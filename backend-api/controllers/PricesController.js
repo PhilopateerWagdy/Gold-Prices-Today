@@ -32,7 +32,7 @@ const getAllPrices = async (req, res) => {
 };
 
 // update database today's record with the latest gold prices
-const updateDbRecord = async (req, res, nxt) => {
+const updateDbRecord = async (req, res) => {
   try {
     req.body.id = await Gold.countDocuments();
 
@@ -40,7 +40,7 @@ const updateDbRecord = async (req, res, nxt) => {
       { date: moment().format("D-MM-YYYY") },
       { $set: req.body },
       { new: true }
-    );
+    ).lean();
 
     if (!updatedPrice) {
       console.log("No Prices was updated. Today's Prices might not exist.");
@@ -50,7 +50,7 @@ const updateDbRecord = async (req, res, nxt) => {
       console.log("Prices Has Been Updated !");
     }
 
-    nxt();
+    res.send(updatedPrice.currency[req.params.curr]);
   } catch (err) {
     for (let e in err.errors) {
       console.log(err.errors[e].message);
