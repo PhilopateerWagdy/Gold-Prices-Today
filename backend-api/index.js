@@ -47,7 +47,7 @@ mongoose
 
 app.get("/", (req, res) => {
   try {
-    res.status(200).json("Hello from Server");
+    res.status(200).json("Hello from my Server");
   } catch (err) {
     console.log(err);
   }
