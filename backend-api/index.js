@@ -22,6 +22,7 @@ app.use(express.json());
 app.use(
   cors({
     origin: process.env.CLIENT_URL,
+    methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
   })
 );
@@ -42,6 +43,8 @@ mongoose
 
 // ------------------------------------------------------
 // CRUD operations on local object (on another module -> MVC pattern)
+
+app.options("*", cors());
 
 app.get("/", (req, res) => {
   try {
