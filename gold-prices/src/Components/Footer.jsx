@@ -54,6 +54,24 @@ const Footer = () => {
         </li>
         <li className="nav-item">
           <NavLink
+            to="/responsibility"
+            className="nav-link px-2"
+            style={{ color: "white" }}
+          >
+            {t("resp")}
+          </NavLink>
+        </li>
+        <li className="nav-item">
+          <NavLink
+            to="/privacy-policy"
+            className="nav-link px-2"
+            style={{ color: "white" }}
+          >
+            {t("privacy")}
+          </NavLink>
+        </li>
+        <li className="nav-item">
+          <NavLink
             to="/contact"
             className="nav-link px-2"
             style={{ color: "white" }}

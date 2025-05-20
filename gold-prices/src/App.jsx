@@ -18,6 +18,8 @@ import News from "./Components/News";
 import Footer from "./Components/Footer";
 import Header from "./Components/Header";
 import ScrollToTop from "./Components/ScrollToTop";
+import Responsibility from "./Components/Responsibility";
+import Privacy from "./Components/Privacy";
 
 // Array of country codes and currencies
 const countries = [
@@ -168,6 +170,8 @@ const App = () => {
           <Route path="/gold-latest-news" element={<News />} />
           <Route path="/gold-companies" element={<Companies />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/responsibility" element={<Responsibility />} />
+          <Route path="/privacy-policy" element={<Privacy />} />
           <Route path="/*" element={<Error />} />
         </Routes>
         <Footer />

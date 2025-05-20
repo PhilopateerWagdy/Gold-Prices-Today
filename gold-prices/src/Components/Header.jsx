@@ -15,6 +15,8 @@ const Header = (props) => {
     "/gold-latest-news": "news",
     "/gold-companies": "companies",
     "/contact": "contact",
+    "/responsibility": "resp",
+    "/privacy-policy": "privacy",
   };
 
   const currentTitle = titles[path] || "home";
