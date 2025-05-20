@@ -52,7 +52,9 @@ const Contact = () => {
     <div className="d-flex flex-column min-vh-100">
       <div className="d-flex flex-row justify-content-center m-2">
         <div className="d-flex flex-column align-items-center border border-dark w-100 h-100 p-3">
-          <h3 className="mb-4 text-center">{t("contact_desc")}</h3>
+          <h3 className="mb-2 text-center">{t("contact_desc")}</h3>
+
+          <p className="mb-4 text-center">{t("mail")}</p>
 
           <hr className="border border-dark w-100"></hr>
 
