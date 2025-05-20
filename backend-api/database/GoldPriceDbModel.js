@@ -15,7 +15,7 @@ const GoldRateSchema = mongoose.Schema({
           "AED",
           "YER",
           "QAR",
-          "ILS",
+          "PSS",
           "OMR",
           "MAD",
           "LBP",

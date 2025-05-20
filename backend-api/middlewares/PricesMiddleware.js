@@ -5,24 +5,49 @@ const convertCurrency = async (toCurrency, amount) => {
   // let api = await API.find({ api_name: "currency" });
   // const apiKey = api[0].api_key;
   // const baseUrl = api[0].base_url;
+
+  const searchedCurr = toCurrency === "PSS" ? "ILS" : toCurrency;
+
   const apiKey =
     "t09MARxzaLV1fAc3JJ8K86aVU8nuj5Sl5mbvLkUxO83mvdWb0MROq7cK5lQFHGoZ";
   const baseUrl = "https://api.unirateapi.com/api";
   const fromCurrency = "USD";
+  const primary_Url = `${baseUrl}/convert?api_key=${apiKey}&from=${fromCurrency}&to=${searchedCurr}&amount=${amount}`;
 
-  const url = `${baseUrl}/convert?api_key=${apiKey}&from=${fromCurrency}&to=${toCurrency}&amount=${amount}`;
+  const fallback_Url = `https://open.er-api.com/v6/latest/${fromCurrency}`;
 
   try {
-    const response = await fetch(url);
+    const response = await fetch(primary_Url);
 
     if (!response.ok) {
       throw new Error(`API request failed with status ${response.status}`);
     }
 
     return await response.json();
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    throw error;
+  } catch (primaryError) {
+    console.warn("Primary API failed. Trying fallback API...", primaryError);
+
+    try {
+      const fallbackResponse = await fetch(fallback_Url);
+
+      if (!fallbackResponse.ok) {
+        throw new Error(
+          `Fallback API failed with status ${fallbackResponse.status}`
+        );
+      }
+
+      const fallbackData = await fallbackResponse.json();
+
+      const rate = fallbackData.rates[searchedCurr];
+      if (!rate) throw new Error("Currency not found in fallback response.");
+
+      return {
+        result: amount * rate,
+      };
+    } catch (fallbackError) {
+      console.error("Both APIs failed.", fallbackError);
+      throw fallbackError;
+    }
   }
 };
 
