@@ -1,6 +1,10 @@
 import SelectedIngot from "@/components/SelectedIngot";
 import { getTranslations } from "@/i18n/request";
+import { getCompanies } from "@/lib/getCompanies";
+import { getIngots } from "@/lib/getIngots";
 import { getLocalizedMetadata } from "@/lib/getMetadata";
+import { Company } from "@/types";
+import { Ingot } from "@/types";
 
 export async function generateStaticParams() {
   return [{ locale: "en" }, { locale: "ar" }];
@@ -37,6 +41,10 @@ export default async function Ingots({
     not_found: t("not_found"),
   };
 
+  const companies: Company[] = await getCompanies();
+  const initialCompany: Company = companies[0];
+  const initialCompanyIngots: Ingot[] = await getIngots(initialCompany);
+
   return (
     <>
       <h1 className="text-2xl font-bold pb-7">{t("ingots-title")}</h1>
@@ -48,7 +56,12 @@ export default async function Ingots({
         <p>{t("ingot_buy_desc")}</p>
       </div>
 
-      <SelectedIngot translations={translations} />
+      <SelectedIngot
+        companies={companies}
+        translations={translations}
+        initialCompany={initialCompany}
+        initialCompanyIngots={initialCompanyIngots}
+      />
     </>
   );
 }

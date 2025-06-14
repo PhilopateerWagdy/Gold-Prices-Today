@@ -2,40 +2,38 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Ingot, Company } from "@/types";
 
-interface Company {
-  _id: string;
-  name: string;
-  ignot_size: number[];
-}
-
-interface Ingot {
-  size: number;
-  factory: number;
-  cashback: number;
-  sel: number;
-  pur: number;
+interface Translations {
+  all_sizes: string;
+  i_size: string;
+  factory: string;
+  cashback: string;
+  sel_price: string;
+  pur_price: string;
+  not_found: string;
 }
 
 interface IngotsProps {
-  translations: {
-    all_sizes: string;
-    i_size: string;
-    factory: string;
-    cashback: string;
-    sel_price: string;
-    pur_price: string;
-    not_found: string;
-  };
+  companies: Company[];
+  translations: Translations;
+  initialCompany: Company;
+  initialCompanyIngots: Ingot[];
 }
 
-export default function SelectedIngot({ translations }: IngotsProps) {
-  const [companies, setCompanies] = useState<Company[]>([]);
-  const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
-  const [sizes, setSizes] = useState<number[]>([]);
+export default function SelectedIngot({
+  companies,
+  translations,
+  initialCompany,
+  initialCompanyIngots,
+}: IngotsProps) {
+  const [selectedCompany, setSelectedCompany] = useState<Company | null>(
+    initialCompany
+  );
+  const [sizes, setSizes] = useState<number[]>(initialCompany.ignot_size ?? []);
   const [selectedSize, setSelectedSize] = useState<number>(111);
-  const [ingots, setIngots] = useState<Ingot[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [ingots, setIngots] = useState<Ingot[]>(initialCompanyIngots);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleCompanyChange = (companyId: string) => {
     const selected = companies.find((c) => c._id === companyId) || null;
@@ -47,35 +45,12 @@ export default function SelectedIngot({ translations }: IngotsProps) {
   };
 
   useEffect(() => {
-    const fetchCompanies = async () => {
-      try {
-        setLoading(true);
-        const res = await axios.get<Company[]>(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/companies`
-        );
-        setCompanies(res.data);
-
-        if (res.data.length > 0) {
-          setSelectedCompany(res.data[0]);
-          setSizes(res.data[0].ignot_size);
-        }
-      } catch (err) {
-        console.error("Error fetching companies:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCompanies();
-  }, []);
-
-  useEffect(() => {
     const fetchIngots = async () => {
       if (!selectedCompany) return;
+      setLoading(true);
 
       try {
-        setLoading(true);
-        const newSizes = selectedCompany.ignot_size;
+        const newSizes = selectedCompany.ignot_size ?? [];
         setSizes(newSizes);
 
         if (selectedSize === 111) {

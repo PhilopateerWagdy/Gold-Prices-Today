@@ -1,6 +1,9 @@
 import CountryPrices from "@/components/CountryPrices";
 import { getTranslations } from "@/i18n/request";
 import { getLocalizedMetadata } from "@/lib/getMetadata";
+import { getGoldPricesByCountry } from "@/lib/getPrices";
+
+export const dynamic = "force-dynamic";
 
 export async function generateStaticParams() {
   return [{ locale: "en" }, { locale: "ar" }];
@@ -19,108 +22,6 @@ export async function generateMetadata({
   });
 }
 
-// Array of country codes and currencies
-const countries = [
-  {
-    value: "EGP",
-    label: "🇪🇬 EGP",
-    name_ar: "جنيه مصري",
-    name_en: "Egyptian Pound",
-    flagUrl: "https://flagcdn.com/w20/eg.png",
-  },
-  {
-    value: "SAR",
-    label: "🇸🇦 SAR",
-    name_ar: "ريال سعودي",
-    name_en: "Saudi Riyal",
-    flagUrl: "https://flagcdn.com/w20/sa.png",
-  },
-  {
-    value: "SYP",
-    label: "🇸🇾 SYP",
-    name_ar: "ليرة سورية",
-    name_en: "Syrian Pound",
-    flagUrl: "https://flagcdn.com/w20/sy.png",
-  },
-  {
-    value: "TND",
-    label: "🇹🇳 TND",
-    name_ar: "دينار تونسي",
-    name_en: "Tunisian Dinar",
-    flagUrl: "https://flagcdn.com/w20/tn.png",
-  },
-  {
-    value: "AED",
-    label: "🇦🇪 AED",
-    name_ar: "درهم إماراتي",
-    name_en: "Emirati Dirham",
-    flagUrl: "https://flagcdn.com/w20/ae.png",
-  },
-  {
-    value: "YER",
-    label: "🇾🇪 YER",
-    name_ar: "ريال يمني",
-    name_en: "Yemeni Riyal",
-    flagUrl: "https://flagcdn.com/w20/ye.png",
-  },
-  {
-    value: "QAR",
-    label: "🇶🇦 QAR",
-    name_ar: "ريال قطري",
-    name_en: "Qatari Riyal",
-    flagUrl: "https://flagcdn.com/w20/qa.png",
-  },
-  {
-    value: "PSS",
-    label: "🇵🇸 PSS",
-    name_ar: "شيكل فلسطيني",
-    name_en: "Palestinian Shekel",
-    flagUrl: "https://flagcdn.com/w20/ps.png",
-  },
-  {
-    value: "OMR",
-    label: "🇴🇲 OMR",
-    name_ar: "ريال عُماني",
-    name_en: "Omani Rial",
-    flagUrl: "https://flagcdn.com/w20/om.png",
-  },
-  {
-    value: "MAD",
-    label: "🇲🇦 MAD",
-    name_ar: "درهم مغربي",
-    name_en: "Moroccan Dirham",
-    flagUrl: "https://flagcdn.com/w20/ma.png",
-  },
-  {
-    value: "LBP",
-    label: "🇱🇧 LBP",
-    name_ar: "ليرة لبنانية",
-    name_en: "Lebanese Pound",
-    flagUrl: "https://flagcdn.com/w20/lb.png",
-  },
-  {
-    value: "KWD",
-    label: "🇰🇼 KWD",
-    name_ar: "دينار كويتي",
-    name_en: "Kuwaiti Dinar",
-    flagUrl: "https://flagcdn.com/w20/kw.png",
-  },
-  {
-    value: "JOD",
-    label: "🇯🇴 JOD",
-    name_ar: "دينار أردني",
-    name_en: "Jordanian Dinar",
-    flagUrl: "https://flagcdn.com/w20/jo.png",
-  },
-  {
-    value: "IQD",
-    label: "🇮🇶 IQD",
-    name_ar: "دينار عراقي",
-    name_en: "Iraqi Dinar",
-    flagUrl: "https://flagcdn.com/w20/iq.png",
-  },
-];
-
 export default async function Home({
   params,
 }: {
@@ -128,6 +29,108 @@ export default async function Home({
 }) {
   const { locale } = await params;
   const t = await getTranslations(locale);
+
+  // Array of country codes and currencies
+  const countries = [
+    {
+      value: "EGP",
+      label: "🇪🇬 EGP",
+      name_ar: "جنيه مصري",
+      name_en: "Egyptian Pound",
+      flagUrl: "https://flagcdn.com/w20/eg.png",
+    },
+    {
+      value: "SAR",
+      label: "🇸🇦 SAR",
+      name_ar: "ريال سعودي",
+      name_en: "Saudi Riyal",
+      flagUrl: "https://flagcdn.com/w20/sa.png",
+    },
+    {
+      value: "SYP",
+      label: "🇸🇾 SYP",
+      name_ar: "ليرة سورية",
+      name_en: "Syrian Pound",
+      flagUrl: "https://flagcdn.com/w20/sy.png",
+    },
+    {
+      value: "TND",
+      label: "🇹🇳 TND",
+      name_ar: "دينار تونسي",
+      name_en: "Tunisian Dinar",
+      flagUrl: "https://flagcdn.com/w20/tn.png",
+    },
+    {
+      value: "AED",
+      label: "🇦🇪 AED",
+      name_ar: "درهم إماراتي",
+      name_en: "Emirati Dirham",
+      flagUrl: "https://flagcdn.com/w20/ae.png",
+    },
+    {
+      value: "YER",
+      label: "🇾🇪 YER",
+      name_ar: "ريال يمني",
+      name_en: "Yemeni Riyal",
+      flagUrl: "https://flagcdn.com/w20/ye.png",
+    },
+    {
+      value: "QAR",
+      label: "🇶🇦 QAR",
+      name_ar: "ريال قطري",
+      name_en: "Qatari Riyal",
+      flagUrl: "https://flagcdn.com/w20/qa.png",
+    },
+    {
+      value: "PSS",
+      label: "🇵🇸 PSS",
+      name_ar: "شيكل فلسطيني",
+      name_en: "Palestinian Shekel",
+      flagUrl: "https://flagcdn.com/w20/ps.png",
+    },
+    {
+      value: "OMR",
+      label: "🇴🇲 OMR",
+      name_ar: "ريال عُماني",
+      name_en: "Omani Rial",
+      flagUrl: "https://flagcdn.com/w20/om.png",
+    },
+    {
+      value: "MAD",
+      label: "🇲🇦 MAD",
+      name_ar: "درهم مغربي",
+      name_en: "Moroccan Dirham",
+      flagUrl: "https://flagcdn.com/w20/ma.png",
+    },
+    {
+      value: "LBP",
+      label: "🇱🇧 LBP",
+      name_ar: "ليرة لبنانية",
+      name_en: "Lebanese Pound",
+      flagUrl: "https://flagcdn.com/w20/lb.png",
+    },
+    {
+      value: "KWD",
+      label: "🇰🇼 KWD",
+      name_ar: "دينار كويتي",
+      name_en: "Kuwaiti Dinar",
+      flagUrl: "https://flagcdn.com/w20/kw.png",
+    },
+    {
+      value: "JOD",
+      label: "🇯🇴 JOD",
+      name_ar: "دينار أردني",
+      name_en: "Jordanian Dinar",
+      flagUrl: "https://flagcdn.com/w20/jo.png",
+    },
+    {
+      value: "IQD",
+      label: "🇮🇶 IQD",
+      name_ar: "دينار عراقي",
+      name_en: "Iraqi Dinar",
+      flagUrl: "https://flagcdn.com/w20/iq.png",
+    },
+  ];
 
   const translations = {
     currency: t("currency"),
@@ -142,6 +145,9 @@ export default async function Home({
     dollar_curr: t("dollar_curr"),
   };
 
+  const selectedCountry = countries[0];
+  const prices = await getGoldPricesByCountry(selectedCountry.value);
+
   return (
     <main>
       <h1 className="text-2xl font-bold pb-7">{t("title")}</h1>
@@ -153,7 +159,12 @@ export default async function Home({
 
       <hr className="border border-dark mb-5"></hr>
 
-      <CountryPrices countries={countries} translations={translations} />
+      <CountryPrices
+        countries={countries}
+        translations={translations}
+        initialPrices={prices}
+        selectedCurrency={selectedCountry}
+      />
     </main>
   );
 }

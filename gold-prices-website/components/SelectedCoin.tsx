@@ -2,41 +2,40 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Spinner from "./Loading";
+import { Company } from "@/types";
+import { Coin } from "@/types";
 
-interface Company {
-  _id: string;
-  name: string;
-  coin: number[];
+interface Translations {
+  all_sizes: string;
+  c_size: string;
+  factory: string;
+  cashback: string;
+  sel_price: string;
+  pur_price: string;
+  not_found: string;
 }
 
-interface Coin {
-  coin: number;
-  size: number;
-  factory: number;
-  cashback: number;
-  sel: number;
-  pur: number;
+interface CoinsProps {
+  companies: Company[];
+  translations: Translations;
+  initialCompany: Company;
+  initialCompanyCoins: Coin[];
 }
 
-interface IngotsProps {
-  translations: {
-    all_sizes: string;
-    c_size: string;
-    factory: string;
-    cashback: string;
-    sel_price: string;
-    pur_price: string;
-    not_found: string;
-  };
-}
-
-export default function SelectedCoin({ translations }: IngotsProps) {
-  const [companies, setCompanies] = useState<Company[]>([]);
-  const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
-  const [sizes, setSizes] = useState<number[]>([]);
+export default function SelectedCoin({
+  companies,
+  translations,
+  initialCompany,
+  initialCompanyCoins,
+}: CoinsProps) {
+  const [selectedCompany, setSelectedCompany] = useState<Company | null>(
+    initialCompany
+  );
+  const [sizes, setSizes] = useState<number[]>(initialCompany.coin ?? []);
   const [selectedSize, setSelectedSize] = useState<number>(111);
-  const [coins, setCoins] = useState<Coin[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [coins, setCoins] = useState<Coin[]>(initialCompanyCoins);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleCompanyChange = (companyId: string) => {
     const selected = companies.find((c) => c._id === companyId) || null;
@@ -48,35 +47,12 @@ export default function SelectedCoin({ translations }: IngotsProps) {
   };
 
   useEffect(() => {
-    const fetchCompanies = async () => {
-      try {
-        setLoading(true);
-        const res = await axios.get<Company[]>(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/companies`
-        );
-        setCompanies(res.data);
-
-        if (res.data.length > 0) {
-          setSelectedCompany(res.data[0]);
-          setSizes(res.data[0].coin);
-        }
-      } catch (err) {
-        console.error("Error fetching companies:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCompanies();
-  }, []);
-
-  useEffect(() => {
     const fetchCoins = async () => {
       if (!selectedCompany) return;
+      setLoading(true);
 
       try {
-        setLoading(true);
-        const newSizes = selectedCompany.coin;
+        const newSizes = selectedCompany.coin ?? [];
         setSizes(newSizes);
 
         if (selectedSize === 111) {
@@ -207,9 +183,7 @@ export default function SelectedCoin({ translations }: IngotsProps) {
                       key={idx}
                     >
                       {loading ? (
-                        <div className="flex justify-center">
-                          <div className="w-4 h-4 border-2 border-t-transparent border-black rounded-full animate-spin"></div>
-                        </div>
+                        <Spinner />
                       ) : coin.size === 0 ? (
                         translations.not_found
                       ) : field === "sel" || field === "pur" ? (

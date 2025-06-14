@@ -1,6 +1,10 @@
 import SelectedCoin from "@/components/SelectedCoin";
 import { getTranslations } from "@/i18n/request";
+import { getCoins } from "@/lib/getCoins";
+import { getCompanies } from "@/lib/getCompanies";
 import { getLocalizedMetadata } from "@/lib/getMetadata";
+import { Company } from "@/types";
+import { Coin } from "@/types";
 
 export async function generateStaticParams() {
   return [{ locale: "en" }, { locale: "ar" }];
@@ -37,6 +41,10 @@ export default async function Coins({
     not_found: t("not_found"),
   };
 
+  const companies: Company[] = await getCompanies();
+  const initialCompany: Company = companies[0];
+  const initialCompanyCoins: Coin[] = await getCoins(initialCompany);
+
   return (
     <>
       <h1 className="text-2xl font-bold pb-7">{t("coins-title")}</h1>
@@ -48,7 +56,12 @@ export default async function Coins({
         <p>{t("coin_buy_desc")}</p>
       </div>
 
-      <SelectedCoin translations={translations} />
+      <SelectedCoin
+        companies={companies}
+        translations={translations}
+        initialCompany={initialCompany}
+        initialCompanyCoins={initialCompanyCoins}
+      />
     </>
   );
 }

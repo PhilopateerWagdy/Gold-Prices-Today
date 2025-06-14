@@ -1,13 +1,9 @@
-"use client"; // or remove this if used in server components
+"use client";
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-// import Select from "react-select";
 import Image from "next/image";
-
-function roundToTwo(num?: number) {
-  return num ? Math.round(num * 100) / 100 : 0;
-}
+// import Spinner from "./Loading";
 
 interface Prices {
   k24_sel?: number;
@@ -46,50 +42,42 @@ interface CountryOption {
 interface CountryPricesProps {
   countries: CountryOption[];
   translations: Translations;
+  selectedCurrency: CountryOption;
+  initialPrices: Prices;
 }
 
 export default function CountryPrices({
   countries,
   translations,
+  selectedCurrency,
+  initialPrices,
 }: CountryPricesProps) {
-  const [selectedCurrency, setSelectedCurrency] = useState<CountryOption>(
-    countries[0]
-  );
-  const [prices, setPrices] = useState<Prices>({});
-  const [loading, setLoading] = useState(true);
-  const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
-
+  const [selected, setSelected] = useState(selectedCurrency);
+  const [prices, setPrices] = useState<Prices>(initialPrices);
+  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const handleChange2 = (option: CountryOption) => {
-    setSelectedCurrency(option);
-  };
-
-  const handleChange = (selectedOption: CountryOption | null) => {
-    if (selectedOption) {
-      setSelectedCurrency(selectedOption);
-    }
-  };
-
   useEffect(() => {
-    const getGoldPrices = async () => {
+    const fetchPrices = async () => {
       try {
         setLoading(true);
         const { data } = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/gold-prices/${selectedCurrency.value}`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/gold-prices/${selected.value}`
         );
         setPrices(data);
       } catch (err) {
-        console.error("Error fetching prices:", err);
+        console.error(err);
       } finally {
         setLoading(false);
       }
     };
 
-    getGoldPrices();
-    const intervalId = setInterval(getGoldPrices, 60000);
-    return () => clearInterval(intervalId);
-  }, [selectedCurrency]);
+    fetchPrices();
+    const interval = setInterval(fetchPrices, 60000);
+    return () => clearInterval(interval);
+  }, [selected]);
+
+  const roundToTwo = (num?: number) => (num ? Math.round(num * 100) / 100 : 0);
 
   return (
     <>
@@ -99,90 +87,58 @@ export default function CountryPrices({
       >
         {translations.currency}
       </label>
-      {isMobile ? (
-        <div className="flex flex-col">
-          <label
-            htmlFor="company-select"
-            className="mb-1 text-sm font-medium text-gray-700"
+      {/* Country Select (same as your code) */}
+      <div className="flex justify-center items-start w-full mt-4">
+        <div className="relative inline-block w-max">
+          <button
+            onClick={() => setOpen(!open)}
+            className="border p-2 rounded-md bg-white"
           >
-            {translations.currency}
-          </label>
-          <select
-            id="company-select"
-            value={selectedCurrency.value}
-            onChange={(e) =>
-              handleChange(
-                countries.find((c) => c.value === e.target.value) || null
-              )
-            }
-            className="w-auto px-2 py-1 rounded-md border border-gray-300 text-sm shadow-sm"
-          >
-            {countries
-              .filter((country) => country.value !== selectedCurrency.value)
-              .map((country) => (
-                <option key={country.value} value={country.value}>
-                  {country.label}
-                </option>
-              ))}
-          </select>
+            <div className="flex items-center gap-2">
+              <Image
+                src={selected.flagUrl}
+                alt={`${selected.label} flag`}
+                width={20}
+                height={14}
+                className="object-contain"
+                unoptimized
+              />
+              {selected.label} ▼
+            </div>
+          </button>
+
+          {open && (
+            <ul className="absolute left-0 w-full bg-white shadow-md border mt-1 z-10">
+              {countries
+                .filter((c) => c.value !== selected.value)
+                .map((country) => (
+                  <li
+                    key={country.value}
+                    onClick={() => {
+                      setSelected(country);
+                      setOpen(false);
+                    }}
+                    className="cursor-pointer hover:bg-gray-100 px-2 py-1"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Image
+                        src={country.flagUrl}
+                        alt={`${country.label} flag`}
+                        width={20}
+                        height={14}
+                        className="object-contain"
+                        unoptimized
+                      />
+                      {country.label}
+                    </div>
+                  </li>
+                ))}
+            </ul>
+          )}
         </div>
-      ) : (
-        <div className="flex flex-col">
-          <div className="relative inline-block w-50 mx-auto">
-            <button
-              onClick={() => setOpen(!open)}
-              className="flex items-center justify-between w-full p-2 border rounded-md bg-white"
-            >
-              <div className="flex justify-center items-center mt-2">
-                <div className="relative w-[20px] h-[14px] mr-2">
-                  <Image
-                    src={selectedCurrency.flagUrl}
-                    alt={`${selectedCurrency.label} flag`}
-                    fill
-                    className="object-contain"
-                    unoptimized
-                  />
-                </div>
+      </div>
 
-                {selectedCurrency.label}
-              </div>
-              <span>▼</span>
-            </button>
-
-            {open && (
-              <ul className="absolute z-10 mt-1 w-max bg-white border rounded-md shadow-md max-h-60 overflow-y-auto">
-                {countries
-                  .filter((country) => country.value !== selectedCurrency.value)
-                  .map((country) => (
-                    <li
-                      key={country.value}
-                      className="flex items-center px-2 py-1 hover:bg-gray-100 cursor-pointer"
-                      onClick={() => {
-                        handleChange2(country);
-                        setOpen(false);
-                      }}
-                    >
-                      <div className="flex justify-center items-center mt-2">
-                        <div className="relative w-[20px] h-[14px] mr-2">
-                          <Image
-                            src={country.flagUrl}
-                            alt={`${country.label} flag`}
-                            fill
-                            className="object-contain"
-                            unoptimized
-                          />
-                        </div>
-
-                        {country.label}
-                      </div>
-                    </li>
-                  ))}
-              </ul>
-            )}
-          </div>
-        </div>
-      )}
-
+      {/* Table */}
       <div className="overflow-x-auto w-full mt-8">
         <table className="table-auto border-collapse text-center text-xs sm:text-sm shadow rounded mx-auto min-w-full sm:min-w-max">
           <thead>
