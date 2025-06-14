@@ -1,5 +1,5 @@
 import { getTranslations } from "@/i18n/request";
-import { getCompanies } from "../page"; // assuming getCompanies is exported from list page
+import { getCompanies } from "@/lib/getCompanies"; // assuming getCompanies is exported from list page
 import Image from "next/image";
 import Link from "next/link";
 

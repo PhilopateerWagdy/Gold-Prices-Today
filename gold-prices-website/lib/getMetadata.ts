@@ -1,21 +1,14 @@
 interface SEOOptions {
   locale: "en" | "ar";
-  title: string;
-  desc: string;
   path?: string;
 }
 
-export async function getLocalizedMetadata({
-  locale,
-  path = "",
-  title,
-  desc,
-}: SEOOptions) {
+export async function getLocalizedMetadata({ locale, path = "" }: SEOOptions) {
   const fullUrl = `https://goldpricestoday.xyz/${locale}/${path}`;
 
   return {
-    title: title,
-    description: desc,
+    title: "Gold Prices Today",
+    description: "Gold Prices Today Website",
     alternates: {
       canonical: fullUrl,
       languages: {
@@ -24,8 +17,8 @@ export async function getLocalizedMetadata({
       },
     },
     openGraph: {
-      title: title,
-      description: desc,
+      title: "Gold Prices Today",
+      description: "Gold Prices Today Website",
       url: fullUrl,
       // images: "https://goldpricestoday.xyz/favicon.ico",
       type: "website",

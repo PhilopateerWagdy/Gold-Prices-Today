@@ -15,8 +15,6 @@ export async function generateMetadata({
   return getLocalizedMetadata({
     locale: locale,
     path: "/responsibility",
-    title: "Responsibility Page",
-    desc: "Responsibility Page In Gold Prices Today Website.",
   });
 }
 

@@ -16,8 +16,6 @@ export async function generateMetadata({
   return getLocalizedMetadata({
     locale: locale,
     path: "/gold-coins-prices",
-    title: "Gold Coins Prices Page",
-    desc: "Gold Coins Prices Page In Gold Prices Today Website.",
   });
 }
 

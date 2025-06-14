@@ -156,7 +156,7 @@ export default function SelectedCoin({ translations }: IngotsProps) {
             <option value={111}>{translations.all_sizes}</option>
             {!sizes.includes(selectedSize) && selectedSize !== 111 && (
               <option value={selectedSize} className="text-red-600">
-                {selectedSize} (Not available)
+                {selectedSize} {translations.not_found}
               </option>
             )}
             {sizes.map((size, idx) => (
@@ -200,7 +200,12 @@ export default function SelectedCoin({ translations }: IngotsProps) {
               <tr key={index} className="border-b hover:bg-gray-100">
                 {["coin", "factory", "cashback", "sel", "pur"].map(
                   (field, idx) => (
-                    <td className="border px-2 py-1 sm:px-4 sm:py-2" key={idx}>
+                    <td
+                      className={`border px-2 py-1 sm:px-4 sm:py-2 ${
+                        field === "coin" ? "bg-gray-300" : ""
+                      }`}
+                      key={idx}
+                    >
                       {loading ? (
                         <div className="flex justify-center">
                           <div className="w-4 h-4 border-2 border-t-transparent border-black rounded-full animate-spin"></div>

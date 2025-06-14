@@ -2,9 +2,9 @@ export const dynamic = "force-dynamic";
 
 import { getTranslations } from "@/i18n/request";
 import { getLocalizedMetadata } from "@/lib/getMetadata";
-import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
+import { getCompanies } from "@/lib/getCompanies";
 
 type Company = {
   _id: string;
@@ -35,21 +35,7 @@ export async function generateMetadata({
   return getLocalizedMetadata({
     locale: locale,
     path: "/gold-companies",
-    title: "Gold Companies Page",
-    desc: "Gold Companies Page In Gold Prices Today Website.",
   });
-}
-
-export async function getCompanies(): Promise<Company[]> {
-  try {
-    const { data } = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/companies`
-    );
-    return data;
-  } catch (err) {
-    console.error("Error fetching companies:", err);
-    return [];
-  }
 }
 
 export default async function Companies({

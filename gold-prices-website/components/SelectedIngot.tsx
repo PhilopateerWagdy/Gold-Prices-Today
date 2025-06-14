@@ -75,28 +75,31 @@ export default function SelectedIngot({ translations }: IngotsProps) {
 
       try {
         setLoading(true);
-        setSizes(selectedCompany.ignot_size);
+        const newSizes = selectedCompany.ignot_size;
+        setSizes(newSizes);
 
         if (selectedSize === 111) {
           const res = await axios.get<Ingot[]>(
             `${process.env.NEXT_PUBLIC_API_URL}/api/ignots/${selectedCompany.name}`
           );
           setIngots(res.data);
-        } else if (selectedCompany.ignot_size.includes(selectedSize)) {
-          const res = await axios.get<Ingot[]>(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/ignots/${selectedCompany.name}/${selectedSize}`
-          );
-          setIngots(res.data);
         } else {
-          setIngots([
-            {
-              size: 0,
-              factory: 0,
-              cashback: 0,
-              sel: 0,
-              pur: 0,
-            },
-          ]);
+          try {
+            const res = await axios.get<Ingot[]>(
+              `${process.env.NEXT_PUBLIC_API_URL}/api/ignots/${selectedCompany.name}/${selectedSize}`
+            );
+            setIngots(res.data);
+          } catch {
+            setIngots([
+              {
+                size: 0,
+                factory: 0,
+                cashback: 0,
+                sel: 0,
+                pur: 0,
+              },
+            ]);
+          }
         }
       } catch (err) {
         console.error("Error fetching ingots:", err);
@@ -149,6 +152,11 @@ export default function SelectedIngot({ translations }: IngotsProps) {
             className="w-auto px-2 py-1 rounded-md border border-gray-300 text-sm shadow-sm"
           >
             <option value={111}>{translations.all_sizes}</option>
+            {!sizes.includes(selectedSize) && selectedSize !== 111 && (
+              <option value={selectedSize} className="text-red-600">
+                {selectedSize} {translations.not_found}
+              </option>
+            )}
             {sizes.map((size, idx) => (
               <option key={idx} value={size}>
                 {size}
@@ -190,7 +198,12 @@ export default function SelectedIngot({ translations }: IngotsProps) {
               <tr key={index} className="border-b hover:bg-gray-100">
                 {["size", "factory", "cashback", "sel", "pur"].map(
                   (field, idx) => (
-                    <td className="border px-2 py-1 sm:px-4 sm:py-2" key={idx}>
+                    <td
+                      className={`border px-2 py-1 sm:px-4 sm:py-2 ${
+                        field === "size" ? "bg-gray-300" : ""
+                      }`}
+                      key={idx}
+                    >
                       {loading ? (
                         <div className="flex justify-center">
                           <div className="w-4 h-4 border-2 border-t-transparent border-black rounded-full animate-spin"></div>

@@ -15,8 +15,6 @@ export async function generateMetadata({
   return getLocalizedMetadata({
     locale: locale,
     path: "/privacy-policy",
-    title: "Privacy Policy Page",
-    desc: "Privacy Policy Page In Gold Prices Today Website.",
   });
 }
 

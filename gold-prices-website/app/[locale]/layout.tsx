@@ -37,6 +37,13 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} dir={direction} className={locale === "ar" ? "ar" : ""}>
+      <head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5638619318510097"
+          crossOrigin="anonymous"
+        ></script>
+      </head>
       <body className="min-h-screen flex flex-col">
         <ScrollTop />
         <Navbar locale={locale} translations={translations} />

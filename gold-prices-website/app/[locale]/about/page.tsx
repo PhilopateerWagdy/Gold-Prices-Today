@@ -15,8 +15,6 @@ export async function generateMetadata({
   return getLocalizedMetadata({
     locale: locale,
     path: "/about",
-    title: "About Page",
-    desc: "About Page In Gold Prices Today Website.",
   });
 }
 

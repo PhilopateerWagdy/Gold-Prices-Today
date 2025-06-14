@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic";
 
 import { getTranslations } from "@/i18n/request";
 import { getLocalizedMetadata } from "@/lib/getMetadata";
-import axios from "axios";
+import { getNews } from "@/lib/getNews";
 import Image from "next/image";
 
 export async function generateStaticParams() {
@@ -19,24 +19,7 @@ export async function generateMetadata({
   return getLocalizedMetadata({
     locale: locale,
     path: "/gold-latest-news",
-    title: "Gold Latest News Page",
-    desc: "Gold Latest News Page In Gold Prices Today Website.",
   });
-}
-
-export async function getNews(locale: "ar" | "en") {
-  const apikey = "pub_85454a92c741c29363f49ad0597d229711644";
-  const search = "gold";
-  const category = "top";
-  try {
-    const { data } = await axios.get(
-      `https://newsdata.io/api/1/latest?apikey=${apikey}&q=${search}&category=${category}&language=${locale}`
-    );
-    return data.results;
-  } catch (err) {
-    console.log("No News Found: ", err);
-    return [];
-  }
 }
 
 export default async function News({

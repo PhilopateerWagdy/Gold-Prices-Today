@@ -42,7 +42,7 @@
 
   "coins": "Coins Prices Now In Egypt",
   "coin_buy_desc": "Coin Buying Price = (21 Gold Karat Buying Price + Workmanship) * Coin Size",
-  "coin_sell_desc": "Coin Selling Price = (24 Gold Karat Selling Price + Cashback) * Coin Size",
+  "coin_sell_desc": "Coin Selling Price = (21 Gold Karat Selling Price + Cashback) * Coin Size",
   "c_size": "Coin",
   "c_s": "Coin Weigth",
   "coins-title": "Most Famous Companies Gold Coins Prices Now In Egypt In All Available Sizes For Every Company",

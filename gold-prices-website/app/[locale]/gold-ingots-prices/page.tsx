@@ -16,8 +16,6 @@ export async function generateMetadata({
   return getLocalizedMetadata({
     locale: locale,
     path: "/gold-ingots-prices",
-    title: "Gold Ingots Prices Page",
-    desc: "Gold Ingots Prices Page In Gold Prices Today Website.",
   });
 }
 
