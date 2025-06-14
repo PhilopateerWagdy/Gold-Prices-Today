@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://goldpricestoday.xyz/
+
+# Sitemaps
+Sitemap: https://goldpricestoday.xyz/sitemap.xml

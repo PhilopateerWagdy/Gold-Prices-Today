@@ -1,0 +1,25 @@
+@import "tailwindcss";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+
+@font-face {
+  font-family: 'Cal Sans';
+  src: url('../../public/fonts/CalSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Tajawal';
+  src: url('../../public/fonts/Tajawal-Bold.ttf') format('truetype');
+}
+
+:root {
+  /* --font-en: 'CalSans', sans-serif; */
+  --font-ar: 'Tajawal', sans-serif;
+}
+
+/* html.en {
+  font-family: var(--font-en);
+} */
+
+html {
+  font-family: var(--font-ar);
+}

@@ -1,0 +1,81 @@
+{
+  "site-name": "Today's Gold Price",
+  "title": "Gold Prices Now In Egypt And Arab Countries Min-By-Min",
+
+  "nav-home": "Home",
+  "nav-ingots": "Ingots",
+  "nav-coins": "Coins",
+  "nav-news": "News",
+  "nav-company": "Companies",
+  "nav-contact": "Contact Us",
+
+  "home": "Gold Prices Now In Egypt",
+  "note_buy": "(buying price): the price that the merchant buy gold from the cllient",
+  "note_sell": "(Selling price): the price that the merchant sell gold for the cllient",
+  "karat": "Gold Karat",
+  "pur-price": "Selling Price",
+  "sel-price": "Buying Price",
+  "k_24": "24 Karat",
+  "k_21": "21 Karat",
+  "k_18": "18 Karat",
+  "k_14": "14 Karat",
+  "ounce_us": "Ounce World Price",
+  "ounce_curr": "Ounce",
+  "coin_curr": "Gold Coin",
+  "dollar_curr": "Goldsmith's Dollar",
+
+  "currency": "Select Currency",
+  "under-header": "Gold Prices Updated Min By Min",
+
+  "ingots": "Ingots Prices Now In Egypt",
+  "ingot_buy_desc": "Ingot Buying Price = (24 Gold Karat Buying Price + Workmanship) * Ingot Size",
+  "ingot_sell_desc": "Ingot Selling Price = (24 Gold Karat Selling Price + Cashback) * Ingot Size",
+  "i_size": "Weight",
+  "factory": "Workman ship",
+  "cashback": "Cash back",
+  "ingots-title": "Most Famous Companies Gold Ingots Prices Now In Egypt In All Available Sizes For Every Company",
+  "gm": "gm",
+  "i_compare": "You Can Compare Between Companies Gold Ingots Prices",
+
+  "not_found": "Not Exist",
+  "all-sizes": "All Sizes",
+
+  "coins": "Coins Prices Now In Egypt",
+  "coin_buy_desc": "Coin Buying Price = (21 Gold Karat Buying Price + Workmanship) * Coin Size",
+  "coin_sell_desc": "Coin Selling Price = (24 Gold Karat Selling Price + Cashback) * Coin Size",
+  "c_size": "Coin",
+  "c_s": "Coin Weigth",
+  "coins-title": "Most Famous Companies Gold Coins Prices Now In Egypt In All Available Sizes For Every Company",
+  "co": "pound",
+  "c_compare": "You Can Compare Between Companies Gold Coin Prices",
+
+  "news": "Latest Gold News",
+  "news-title": "Latest Gold News Now In Egypt And Arab Countries",
+
+  "companies": "Best Gold Companies In Egypt",
+  "comp_title": "Data About Best Companies In Selling Gold Ingots & Coins In Egypt & Arab Countries",
+  "back": "Back To Menu",
+  "i_table": "Ingots Table",
+  "c_table": "Coins Table",
+  "click": "Click On Company Logo To Show More Details",
+
+  "contact_desc": "Feel free to send any suggestion or any question you want to ask, we are here all time for you",
+  "name_label": "Enter Your Name",
+  "phone_label": "Enter Your Phone",
+  "email_label": "Enter Your Email",
+  "message_label": "Enter Your Message",
+  "send": "Send",
+  "contact": "Contact Us",
+  "msg_sent": "Message Sent !",
+  "mail": "(or you can send us an email through  goldpricestodays@gmail.com)",
+
+  "about": "About Us",
+  "who": "The Today's Gold Prices in Egypt website allows you to find out the latest updates on gold prices in the local market in Egypt in Egyptian pounds. It also helps you calculate the value of the dollar at goldsmiths' shops. You can compare ingots and coins prices between famous gold companies in middle east.",
+  "who2": "We also allow user to know gold prices in SAR, AED, QAR, SYP, TND, YER, PAS, OMR, MAD, LBP, KWD, JOD, and IQD",
+
+  "resp": "Responsibility Disclaimer",
+  "disclaimer": "We would like to clarify that this website is intended solely for transmitting prices and news and is not considered a source thereof.\n\nAll data and information provided is taken from external sources, and the source is clearly indicated below each piece of information. Please be aware that the information available on the website may be inaccurate or not up-to-date, and therefore cannot be relied upon as a primary source for making financial decisions.\n\nWe would also like to emphasize that the website does not encourage trading outside the official banking market, and that all prices displayed on the platform are for advisory purposes only. The website assumes no responsibility for decisions made based on them.\n\nWe make every effort to ensure the accuracy and reliability of the information provided, but we make no guarantee as to the accuracy or completeness of the data.\n\nUsers bear full responsibility for the use of the information available on the website.\n\nBy using the website, the user agrees to the above Terms of Use and Disclaimer.",
+
+  "privacy": "Privacy Policy",
+  "privacy-policy": "Dear visitor, your privacy is extremely important to us. The privacy policy contained in this document outlines the types of personal information collected by the Gold Prices Today website and how this information is used.\n\nWe use third-party advertising companies to serve ads. When you visit the Gold Prices Today website in Egypt, these companies may use information about your visits to this website (except for your name, address, email address, or phone number) to provide advertisements about goods and services of interest to you via cookies.\n\nWe at the Gold Prices Today website use Google Ads as an external revenue source. Therefore, Google uses cookies to serve ads on our site. Google uses the cookie to serve ads \"based on interests\" to users based on their visits to our site. Visitors can opt out of the use of the cookie by visiting the Google Ads and Content Network privacy policy.\n\nThird party vendors, including Google, use cookies to serve ads based on a user's prior visits to your website or other websites. Google's use of advertising cookies enables it and its partners to serve ads to your users based on their visit to your sites and/or other sites on the Internet.\n\nUsers may opt out of personalized advertising by visiting Ads Settings. (Alternatively, you can direct users to opt out of a third-party vendor's use of cookies for personalized advertising by visiting www.aboutads.info.)\n\nFinally, under the terms of this agreement, we are obligated to show you how to disable cookies. You can do so through your browser options, or by following the privacy policy for Google ads and the content network.\n\nIf you require more information or have any questions about our privacy policy, please feel free to contact us via the contact form, under the Contact Us tab.\n\nThe terms of this policy are subject to change and modification at any time we deem necessary."
+}
