@@ -5,6 +5,10 @@ import { getTranslations } from "@/i18n/request";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollTop from "@/components/ScrollTop";
+import Script from "next/script";
+
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "G-XXXXXXX";
+const GAD_ID = process.env.NEXT_PUBLIC_GAD_ID || "";
 
 export const metadata: Metadata = {
   title: "Gold Prices Today",
@@ -38,9 +42,21 @@ export default async function RootLayout({
   return (
     <html lang={locale} dir={direction} className={locale === "ar" ? "ar" : ""}>
       <head>
+        <Script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+          strategy="afterInteractive"
+        ></Script>
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', '${GA_ID}');`}
+        </Script>
         <script
           async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5638619318510097"
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${GAD_ID}`}
           crossOrigin="anonymous"
         ></script>
       </head>
