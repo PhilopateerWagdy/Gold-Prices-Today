@@ -69,6 +69,8 @@ export default async function Coins({
         initialCompany={initialCompany}
         initialCompanyCoins={initialCompanyCoins}
       />
+
+      <p className="text-sm text-gray-600 mt-4">{t("c_text")}</p>
     </>
   );
 }

@@ -69,6 +69,8 @@ export default async function Ingots({
         initialCompany={initialCompany}
         initialCompanyIngots={initialCompanyIngots}
       />
+
+      <p className="text-sm text-gray-600 mt-4">{t("i_text")}</p>
     </>
   );
 }
