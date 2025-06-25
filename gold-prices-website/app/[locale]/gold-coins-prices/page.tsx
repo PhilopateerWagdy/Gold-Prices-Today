@@ -5,6 +5,7 @@ import { getCompanies } from "@/lib/getCompanies";
 import { getLocalizedMetadata } from "@/lib/getMetadata";
 import { Company } from "@/types";
 import { Coin } from "@/types";
+import Script from "next/script";
 
 export async function generateStaticParams() {
   return [{ locale: "en" }, { locale: "ar" }];
@@ -47,6 +48,12 @@ export default async function Coins({
 
   return (
     <>
+      <Script
+        async
+        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GAD_ID}`}
+        crossOrigin="anonymous"
+      ></Script>
+
       <h1 className="text-2xl font-bold pb-7">{t("coins-title")}</h1>
       <h1 className="text-xl font-bold pb-5">{t("c_compare")}</h1>
       <hr className="border border-dark mb-5"></hr>

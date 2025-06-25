@@ -2,6 +2,7 @@ import CountryPrices from "@/components/CountryPrices";
 import { getTranslations } from "@/i18n/request";
 import { getLocalizedMetadata } from "@/lib/getMetadata";
 import { getGoldPricesByCountry } from "@/lib/getPrices";
+import Script from "next/script";
 
 export const dynamic = "force-dynamic";
 
@@ -149,22 +150,30 @@ export default async function Home({
   const prices = await getGoldPricesByCountry(selectedCountry.value);
 
   return (
-    <main>
-      <h1 className="text-2xl font-bold pb-7">{t("title")}</h1>
+    <>
+      <Script
+        async
+        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GAD_ID}`}
+        crossOrigin="anonymous"
+      ></Script>
 
-      <div className="text-sm text-center mt-2 mb-4">
-        <p>{t("note_buy")}</p>
-        <p>{t("note_sell")}</p>
-      </div>
+      <main>
+        <h1 className="text-2xl font-bold pb-7">{t("title")}</h1>
 
-      <hr className="border border-dark mb-5"></hr>
+        <div className="text-sm text-center mt-2 mb-4">
+          <p>{t("note_buy")}</p>
+          <p>{t("note_sell")}</p>
+        </div>
 
-      <CountryPrices
-        countries={countries}
-        translations={translations}
-        initialPrices={prices}
-        selectedCurrency={selectedCountry}
-      />
-    </main>
+        <hr className="border border-dark mb-5"></hr>
+
+        <CountryPrices
+          countries={countries}
+          translations={translations}
+          initialPrices={prices}
+          selectedCurrency={selectedCountry}
+        />
+      </main>
+    </>
   );
 }

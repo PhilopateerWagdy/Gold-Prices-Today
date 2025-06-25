@@ -4,6 +4,7 @@ import { getTranslations } from "@/i18n/request";
 import { getLocalizedMetadata } from "@/lib/getMetadata";
 import { getNews } from "@/lib/getNews";
 import Image from "next/image";
+import Script from "next/script";
 
 export async function generateStaticParams() {
   return [{ locale: "en" }, { locale: "ar" }];
@@ -33,6 +34,12 @@ export default async function News({
 
   return (
     <>
+      <Script
+        async
+        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GAD_ID}`}
+        crossOrigin="anonymous"
+      ></Script>
+
       <h1 className="text-2xl font-bold pb-10">{t("news-title")}</h1>
 
       <div className="space-y-4">

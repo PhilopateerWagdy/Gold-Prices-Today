@@ -5,6 +5,7 @@ import { getIngots } from "@/lib/getIngots";
 import { getLocalizedMetadata } from "@/lib/getMetadata";
 import { Company } from "@/types";
 import { Ingot } from "@/types";
+import Script from "next/script";
 
 export async function generateStaticParams() {
   return [{ locale: "en" }, { locale: "ar" }];
@@ -47,6 +48,12 @@ export default async function Ingots({
 
   return (
     <>
+      <Script
+        async
+        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GAD_ID}`}
+        crossOrigin="anonymous"
+      ></Script>
+
       <h1 className="text-2xl font-bold pb-7">{t("ingots-title")}</h1>
       <h1 className="text-xl font-bold pb-5">{t("i_compare")}</h1>
       <hr className="border border-dark mb-5"></hr>
